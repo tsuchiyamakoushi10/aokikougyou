@@ -1,0 +1,63 @@
+{
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/company/index.html",
+      "destination": "/company/",
+      "permanent": true
+    },
+    {
+      "source": "/business/index02.html",
+      "destination": "/business/automatic-door/",
+      "permanent": true
+    },
+    {
+      "source": "/business/index01.html",
+      "destination": "/business/fittings/",
+      "permanent": true
+    },
+    {
+      "source": "/case/:path*",
+      "destination": "/works/",
+      "permanent": true
+    },
+    {
+      "source": "/recruit/index.html",
+      "destination": "/recruit/",
+      "permanent": true
+    },
+    {
+      "source": "/staff/index.html",
+      "destination": "/staff/",
+      "permanent": true
+    },
+    {
+      "source": "/contact/index.html",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/entry/index.html",
+      "destination": "/entry/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ]
+}
