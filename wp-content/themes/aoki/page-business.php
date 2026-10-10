@@ -20,7 +20,7 @@ aoki_page_hero(
 		<div class="biz-overview">
 			<?php $n = 0; foreach ( aoki_business() as $slug => $b ) : $n++; ?>
 				<article class="biz-overview__item">
-					<figure class="biz-overview__media door-reveal"><?php echo aoki_img( $b['image'], '' ); // phpcs:ignore ?></figure>
+					<figure class="biz-overview__media img-reveal"><?php echo aoki_img( $b['image'], '' ); // phpcs:ignore ?></figure>
 					<div class="biz-overview__body reveal">
 						<p class="biz-card__num" aria-hidden="true">0<?php echo (int) $n; ?></p>
 						<p class="biz-card__en" aria-hidden="true"><?php echo esc_html( $b['en'] ); ?></p>

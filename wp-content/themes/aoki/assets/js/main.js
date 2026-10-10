@@ -55,7 +55,7 @@
 	}
 
 	/* スクロールで要素を表示 */
-	var targets = document.querySelectorAll('.reveal, .door-reveal');
+	var targets = document.querySelectorAll('.reveal, .door-reveal, .img-reveal');
 	if ('IntersectionObserver' in window) {
 		var io = new IntersectionObserver(function (entries) {
 			entries.forEach(function (entry) {

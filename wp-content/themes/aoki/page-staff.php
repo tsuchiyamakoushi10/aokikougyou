@@ -36,7 +36,7 @@ aoki_page_hero(
 	<article class="interview<?php echo $i % 2 ? ' interview--reverse section--soft' : ''; ?>" id="staff-<?php echo esc_attr( $s['id'] ); ?>">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo door-reveal"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真' ); // phpcs:ignore ?></figure>
+				<figure class="interview__photo img-reveal"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真' ); // phpcs:ignore ?></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>0<?php echo (int) $i + 1; ?></span></p>
 			</div>
 			<div class="interview__body">

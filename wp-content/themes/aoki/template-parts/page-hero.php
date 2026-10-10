@@ -22,7 +22,6 @@ $args = wp_parse_args(
 			<?php echo aoki_img( $args['image'], '', array( 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore ?>
 		</div>
 	<?php endif; ?>
-	<div class="page-hero__door" aria-hidden="true"><span></span><span></span></div>
 	<div class="page-hero__inner container">
 		<p class="page-hero__en" aria-hidden="true"><?php echo esc_html( $args['en'] ); ?></p>
 		<h1 class="page-hero__title"><?php echo esc_html( $args['title'] ); ?></h1>
