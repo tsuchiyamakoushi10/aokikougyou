@@ -1,0 +1,68 @@
+# ローカル確認用 WordPress 環境
+#   起動:      docker compose up -d && ./bin/setup.sh
+#   URL:       http://localhost:8080/  （管理画面 /wp-admin  admin / admin）
+#   送信メール: http://localhost:8025/  （Mailpit：フォームのテスト送信を確認）
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+    # 全サービスで同じネットワーク名前空間を共有（127.0.0.1 で接続）
+    ports:
+      - "8080:80"
+      - "8025:8025"
+      - "1025:1025"
+    volumes:
+      - db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:6.8-php8.3-apache
+    network_mode: "service:db"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: 127.0.0.1
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_ENVIRONMENT_TYPE', 'local' );
+    volumes:
+      - wp:/var/www/html
+      - ./wp-content/themes/aoki:/var/www/html/wp-content/themes/aoki
+      - ./wp-content/php-error.php:/var/www/html/wp-content/php-error.php
+      - ./wp-content/db-error.php:/var/www/html/wp-content/db-error.php
+      - ./wp-content/maintenance.php:/var/www/html/wp-content/maintenance.php
+      - ./docker/mailpit.php:/var/www/html/wp-content/mu-plugins/mailpit.php
+
+  cli:
+    image: wordpress:cli-php8.3
+    profiles: ["cli"]
+    user: "33:33"
+    network_mode: "service:db"
+    depends_on:
+      - wordpress
+    environment:
+      WORDPRESS_DB_HOST: 127.0.0.1
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp:/var/www/html
+      - ./wp-content/themes/aoki:/var/www/html/wp-content/themes/aoki
+
+  mailpit:
+    image: axllent/mailpit:v1.21
+    network_mode: "service:db"
+
+volumes:
+  db:
+  wp:
