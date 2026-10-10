@@ -9,12 +9,9 @@ get_header();
 ?>
 <section class="error-page">
 	<div class="container error-page__inner">
-		<div class="error-door" aria-hidden="true">
-			<div class="error-door__frame">
-				<div class="error-door__leaf error-door__leaf--l"><span>4</span></div>
-				<div class="error-door__leaf error-door__leaf--r"><span>4</span></div>
-				<div class="error-door__gap"><span>0</span></div>
-			</div>
+		<div class="error-visual" aria-hidden="true">
+			<?php echo aoki_mark_svg( 'error-visual__mark' ); // phpcs:ignore ?>
+			<p class="error-visual__code">404</p>
 		</div>
 		<div class="error-page__body">
 			<p class="error-page__code">404 Not Found</p>

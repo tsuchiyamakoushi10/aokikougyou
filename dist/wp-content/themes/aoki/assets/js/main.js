@@ -34,7 +34,7 @@
 				if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 300);
 			} else {
 				drawer.classList.remove('is-open');
-				setTimeout(function () { if (!drawer.classList.contains('is-open')) drawer.hidden = true; }, 600);
+				setTimeout(function () { if (!drawer.classList.contains('is-open')) drawer.hidden = true; }, 350);
 			}
 		};
 		toggle.addEventListener('click', function () {
