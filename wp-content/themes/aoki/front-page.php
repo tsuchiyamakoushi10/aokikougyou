@@ -54,8 +54,8 @@ $works    = aoki_get_works( 3 );
 			<a class="btn btn--outline reveal" href="<?php echo esc_url( aoki_url( 'company' ) ); ?>">会社案内を見る<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
 		</div>
 		<div class="about__media">
-			<figure class="about__photo about__photo--main door-reveal"><?php echo aoki_img( 'photo/work-door-1.webp', '自動ドアを施工するスタッフ' ); // phpcs:ignore ?></figure>
-			<figure class="about__photo about__photo--sub door-reveal"><?php echo aoki_img( 'photo/meeting-2.webp', '打ち合わせをするスタッフ' ); // phpcs:ignore ?></figure>
+			<figure class="about__photo about__photo--main img-reveal"><?php echo aoki_img( 'photo/work-door-1.webp', '自動ドアを施工するスタッフ' ); // phpcs:ignore ?></figure>
+			<figure class="about__photo about__photo--sub img-reveal"><?php echo aoki_img( 'photo/meeting-2.webp', '打ち合わせをするスタッフ' ); // phpcs:ignore ?></figure>
 		</div>
 	</div>
 </section>
@@ -69,7 +69,7 @@ $works    = aoki_get_works( 3 );
 		<div class="biz__list">
 			<?php $n = 0; foreach ( $business as $slug => $b ) : $n++; ?>
 				<a class="biz-card reveal" href="<?php echo esc_url( aoki_url( 'business/' . $slug ) ); ?>">
-					<figure class="biz-card__media door-reveal"><?php echo aoki_img( $b['image'], '' ); // phpcs:ignore ?></figure>
+					<figure class="biz-card__media img-reveal"><?php echo aoki_img( $b['image'], '' ); // phpcs:ignore ?></figure>
 					<div class="biz-card__body">
 						<p class="biz-card__num" aria-hidden="true">0<?php echo (int) $n; ?></p>
 						<p class="biz-card__en" aria-hidden="true"><?php echo esc_html( $b['en'] ); ?></p>
