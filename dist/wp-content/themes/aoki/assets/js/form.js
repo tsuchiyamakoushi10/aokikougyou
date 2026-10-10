@@ -88,22 +88,74 @@
 			if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 350);
 			return;
 		}
-		// 静的プレビュー版（サーバー処理なし）では送信せずに案内を表示
-		if (form.hasAttribute('data-preview')) {
+		// 静的サイト版（Vercel）：API に送信して結果を表示
+		if (form.dataset.endpoint) {
 			e.preventDefault();
-			var note = form.querySelector('.form__preview-note');
-			if (!note) {
-				note = document.createElement('p');
-				note.className = 'form-alert form__preview-note';
-				note.setAttribute('role', 'status');
-				note.textContent = 'こちらはデザイン確認用のプレビューサイトのため、フォームは送信されません。（入力チェックは本番と同じ動作です）';
-				form.querySelector('.form__submit').prepend(note);
-			}
+			sendToApi();
 			return;
 		}
 		var btn = form.querySelector('[type="submit"]');
 		if (btn) { btn.disabled = true; btn.firstChild.textContent = '送信中…'; }
 	});
+
+	function showAlert(message, errors) {
+		var box = document.getElementById('form-alert');
+		if (!box) {
+			box = document.createElement('div');
+			box.className = 'form-alert';
+			box.id = 'form-alert';
+			box.setAttribute('role', 'alert');
+			box.tabIndex = -1;
+			form.parentNode.insertBefore(box, form);
+		}
+		box.innerHTML = '<div><p class="form-alert__title"></p></div>';
+		box.querySelector('.form-alert__title').textContent = message;
+		if (errors) {
+			var ul = document.createElement('ul');
+			Object.keys(errors).forEach(function (k) {
+				var row = form.querySelector('[data-field="' + k + '"]');
+				if (row) setError(row, errors[k]);
+				var li = document.createElement('li');
+				var a = document.createElement('a');
+				a.href = '#f-' + k;
+				a.textContent = errors[k];
+				li.appendChild(a);
+				ul.appendChild(li);
+			});
+			box.firstChild.appendChild(ul);
+		}
+		box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		box.focus({ preventScroll: true });
+	}
+
+	function sendToApi() {
+		var btn = form.querySelector('[type="submit"]');
+		var label = btn ? btn.firstChild.textContent : '';
+		if (btn) { btn.disabled = true; btn.firstChild.textContent = '送信中…'; }
+		var data = {};
+		new FormData(form).forEach(function (v, k) { data[k] = v; });
+		fetch(form.dataset.endpoint, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+			body: JSON.stringify(data)
+		}).then(function (r) {
+			return r.json().catch(function () { return { ok: false }; });
+		}).then(function (res) {
+			if (res.ok) {
+				location.href = res.redirect || ('/' + form.dataset.form + '/thanks/');
+				return;
+			}
+			showAlert(res.message || '送信処理でエラーが発生しました。お手数ですが、お電話にてご連絡ください。', res.errors);
+			if (btn) { btn.disabled = false; btn.firstChild.textContent = label; }
+		}).catch(function () {
+			showAlert('通信エラーが発生しました。電波の良い場所で再度お試しいただくか、お電話にてご連絡ください。');
+			if (btn) { btn.disabled = false; btn.firstChild.textContent = label; }
+		});
+	}
+
+	// 送信までの時間チェック用（ページを開いた時刻）
+	var ts = form.querySelector('[name="_ts"]');
+	if (ts) ts.value = Math.floor(Date.now() / 1000);
 
 	/* 郵便番号 → 住所（zipcloud API / JSONP） */
 	var zip = form.querySelector('[data-zip]');

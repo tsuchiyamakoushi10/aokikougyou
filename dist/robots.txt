@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /api/
+Disallow: /contact/thanks/
+Disallow: /entry/thanks/
+
+Sitemap: https://www.aokikogyo.co.jp/sitemap.xml

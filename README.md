@@ -61,12 +61,30 @@ docker compose up -d
 - サイト：http://localhost:8080/ （管理画面 admin / admin）
 - 送信メールの確認：http://localhost:8025/ （Mailpit）
 
-## Vercel プレビュー（静的版）
+## Vercel での公開（静的サイト＋フォーム API）
 
-Vercel では PHP / データベースが動かないため、ローカルの WordPress を静的 HTML に書き出した `dist/` を公開しています（デザイン確認用。フォームは送信されません）。
+Vercel では WordPress（PHP / データベース）が動かないため、ローカルの WordPress を静的 HTML に書き出した `dist/` と、
+フォーム送信用のサーバー関数 `api/form.js` を公開しています。
+
+### 公開前に Vercel で設定する環境変数（Settings > Environment Variables）
+
+| 変数 | 内容 | 例 |
+|---|---|---|
+| `SMTP_HOST` | 送信に使うメールサーバー | `smtp.example.com` |
+| `SMTP_PORT` | ポート（465 なら SSL） | `587` |
+| `SMTP_USER` / `SMTP_PASS` | メールサーバーのユーザー・パスワード | |
+| `MAIL_FROM` | 送信元アドレス | `no-reply@aokikogyo.co.jp` |
+| `MAIL_TO_CONTACT` | お問い合わせの受信先 | `info@aokikogyo.co.jp` |
+| `MAIL_TO_ENTRY` | 採用エントリーの受信先（省略時は上と同じ） | |
+
+未設定のままだと、フォーム送信時に「送信処理でエラーが発生しました（お電話ください）」と表示されます。
+
+### 内容を更新するとき
 
 ```bash
 docker compose up -d
-python3 bin/export-static.py   # dist/ を更新
-git add dist && git commit -m "Update preview" && git push
+python3 bin/export-static.py   # dist/ を更新（本番ドメインは SITE_URL で変更可）
+git add -A && git commit -m "サイト更新" && git push
 ```
+
+施工事例の追加などは、ローカルの WordPress 管理画面（http://localhost:8080/wp-admin）で行ってから書き出してください。

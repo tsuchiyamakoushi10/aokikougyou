@@ -1,0 +1,9 @@
+{
+  "name": "aokikougyou-site",
+  "private": true,
+  "description": "青木工業 コーポレートサイト（Vercel：静的サイト＋フォーム送信API）",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "nodemailer": "6.9.16"
+  }
+}

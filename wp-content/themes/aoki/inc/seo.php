@@ -43,6 +43,16 @@ function aoki_meta_description() {
 	return $c['description'];
 }
 
+// canonical はテーマで出力するため、WordPress 標準の出力を止める（重複防止）。
+add_action(
+	'wp',
+	function () {
+		if ( ! aoki_seo_plugin_active() ) {
+			remove_action( 'wp_head', 'rel_canonical' );
+		}
+	}
+);
+
 add_action(
 	'wp_head',
 	function () {
