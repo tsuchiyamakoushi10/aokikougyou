@@ -54,7 +54,6 @@ function aoki_nav() {
 			'path'     => 'recruit',
 			'children' => array(
 				array( 'label' => '採用情報', 'path' => 'recruit' ),
-				array( 'label' => 'スタッフ紹介', 'path' => 'staff' ),
 				array( 'label' => '採用エントリー', 'path' => 'entry' ),
 			),
 		),
