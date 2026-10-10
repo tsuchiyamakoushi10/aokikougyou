@@ -25,11 +25,8 @@ $c = aoki_company();
 			<ul class="gnav__list">
 				<?php foreach ( aoki_nav() as $item ) : ?>
 					<?php
-					if ( 'staff' === $item['path'] ) {
-						continue; // 採用情報の下に表示。
-					}
 					$has_children = ! empty( $item['children'] );
-					$current      = aoki_is_current( $item['path'] ) || ( 'recruit' === $item['path'] && ( aoki_is_current( 'staff' ) || aoki_is_current( 'entry' ) ) );
+					$current      = aoki_is_current( $item['path'] ) || ( 'recruit' === $item['path'] && aoki_is_current( 'entry' ) );
 					?>
 					<li class="gnav__item<?php echo $has_children ? ' has-children' : ''; ?><?php echo $current ? ' is-current' : ''; ?>">
 						<a class="gnav__link" href="<?php echo esc_url( aoki_url( $item['path'] ) ); ?>"<?php echo $current ? ' aria-current="page"' : ''; ?>>
