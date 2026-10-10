@@ -922,31 +922,7 @@ html.js .img-reveal.is-in img { transform: none; }
 	letter-spacing: .08em;
 	margin-bottom: 36px;
 }
-.top-recruit__values { display: flex; flex-wrap: wrap; gap: 10px; max-width: 760px; }
-.top-recruit__values li {
-	display: inline-flex;
-	align-items: center;
-	gap: 10px;
-	padding: 8px 18px 8px 8px;
-	border: 1px solid rgba(255, 255, 255, .3);
-	border-radius: 999px;
-	background: rgba(255, 255, 255, .06);
-	font-size: 14px;
-	font-weight: 500;
-}
-.top-recruit__values .num {
-	display: grid;
-	place-items: center;
-	width: 26px;
-	height: 26px;
-	border-radius: 50%;
-	background: var(--warm);
-	color: var(--navy-deep);
-	font-family: var(--font-en);
-	font-weight: 700;
-	font-size: 13px;
-}
-.top-recruit__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px; }
+.top-recruit__actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
 /* Staff cards */
 .staff-cards { display: grid; gap: 24px; }

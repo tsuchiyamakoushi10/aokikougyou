@@ -105,11 +105,6 @@ $works    = aoki_get_works( 3 );
 	<div class="top-recruit__inner container">
 		<?php aoki_heading( 'Recruit', '採用情報', 'h2', 'heading--light' ); ?>
 		<p class="top-recruit__catch reveal">あなたのペースで成長を<br>安心の環境で一緒に</p>
-		<ol class="top-recruit__values">
-			<?php foreach ( aoki_recruit_values() as $i => $v ) : ?>
-				<li class="reveal" style="--i:<?php echo (int) $i; ?>"><span class="num"><?php echo (int) $i + 1; ?></span><?php echo esc_html( $v['title'] ); ?></li>
-			<?php endforeach; ?>
-		</ol>
 		<div class="top-recruit__actions reveal">
 			<a class="btn btn--white" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>">採用情報を見る<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
 			<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'entry' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>採用エントリー</a>
