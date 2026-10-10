@@ -36,7 +36,6 @@ def clean(html):
     html = html.replace(BASE, '')
     # ローカル環境の noindex を外す（本番は検索対象）
     html = re.sub(r"<meta name='robots' content='[^']*' />", "<meta name='robots' content='max-image-preview:large' />", html)
-    html = re.sub(r'(\.(css|js))\?ver=[^"\']+', r'\1', html)
     # フォームは Vercel の API（/api/form）へ送信
     html = re.sub(r'<form class="form" action="[^"]*"', '<form class="form" action="/api/form" data-endpoint="/api/form"', html)
     html = re.sub(r'<input type="hidden" id="_aoki_nonce"[^>]*>', '', html)

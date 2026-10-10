@@ -415,21 +415,22 @@ html.intro-opened:not(.intro-done) .site-header--overlay { transition-delay: 2.4
 	.has-children > .gnav__link::before { right: 14px; }
 }
 
-/* ドロワー（扉のように左右から閉じる） */
+/* ドロワー（ふわっと表示） */
 .drawer {
 	position: fixed;
 	inset: 0;
 	z-index: 90;
 	padding-top: var(--header-h);
-	background: linear-gradient(90deg, var(--navy-deep) 50%, var(--navy) 50%);
+	background: var(--navy-deep);
 	color: #fff;
 	overflow-y: auto;
-	clip-path: inset(0 50% 0 50%);
-	transition: clip-path .6s var(--ease-door), visibility 0s .6s;
+	opacity: 0;
+	transform: translateY(-12px);
+	transition: opacity .35s var(--ease), transform .35s var(--ease), visibility 0s .35s;
 	visibility: hidden;
 }
 .drawer[hidden] { display: block !important; }
-.drawer.is-open { clip-path: inset(0 0 0 0); visibility: visible; transition: clip-path .6s var(--ease-door); }
+.drawer.is-open { opacity: 1; transform: none; visibility: visible; transition: opacity .35s var(--ease), transform .35s var(--ease); }
 .drawer__inner {
 	min-height: 100%;
 	padding: 24px var(--gutter) 120px;
@@ -1508,41 +1509,17 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
 .error-page__code { margin-bottom: 8px; font-family: var(--font-en); font-weight: 700; letter-spacing: .16em; color: var(--blue); }
 .error-page__title { font-size: clamp(24px, 3.4vw, 34px); margin-bottom: 20px; }
 
-.error-door { display: grid; place-items: center; }
-.error-door__frame {
-	position: relative;
-	width: min(100%, 300px);
-	aspect-ratio: 3 / 4;
-	padding: 12px 12px 0;
-	border-radius: 4px 4px 0 0;
-	background: linear-gradient(90deg, #8c99a6, #dfe5ea 30%, #a9b5c0 55%, #e9eef2 80%, #8c99a6);
-	display: flex;
-	overflow: hidden;
+.error-visual { display: grid; place-items: center; gap: 12px; }
+.error-visual__mark { width: clamp(72px, 10vw, 110px); height: auto; }
+.error-visual__code {
+	font-family: var(--font-en);
+	font-size: clamp(80px, 14vw, 150px);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: .04em;
+	color: transparent;
+	-webkit-text-stroke: 2px var(--navy);
 }
-.error-door__gap {
-	position: absolute;
-	inset: 12px 12px 0;
-	z-index: 0;
-	display: grid;
-	place-items: center;
-	background: radial-gradient(circle at 50% 60%, var(--warm-soft), var(--warm) 40%, #f2a33a);
-}
-.error-door__gap span, .error-door__leaf span { font-family: var(--font-en); font-size: clamp(56px, 10vw, 84px); font-weight: 700; line-height: 1; }
-.error-door__gap span { color: var(--navy-deep); }
-.error-door__leaf {
-	position: relative;
-	z-index: 1;
-	flex: 1;
-	display: grid;
-	place-items: center;
-	background: linear-gradient(180deg, rgba(196, 220, 240, .95), rgba(150, 180, 205, .95));
-	border: 4px solid #c9d2da;
-	color: var(--navy);
-	animation: errDoorL 4s var(--ease-door) 1s infinite;
-}
-.error-door__leaf--r { animation-name: errDoorR; }
-@keyframes errDoorL { 0%, 25% { transform: none; } 45%, 75% { transform: translateX(-38%); } 95%, 100% { transform: none; } }
-@keyframes errDoorR { 0%, 25% { transform: none; } 45%, 75% { transform: translateX(38%); } 95%, 100% { transform: none; } }
 
 .not-found { margin-top: 28px; }
 .not-found__label { margin: 32px 0 12px; font-weight: 700; color: var(--ink); }
