@@ -776,9 +776,16 @@ html.js .door-reveal.is-in::before { transform: translateX(-101%); }
 html.js .door-reveal.is-in::after { transform: translateX(101%); }
 html.js .door-reveal.is-in img { transform: none; }
 
+/* 画像：ふわっと表示（下層ページ） */
+.img-reveal { overflow: hidden; }
+html.js .img-reveal { opacity: 0; transition: opacity 1.2s var(--ease); }
+html.js .img-reveal img { transform: scale(1.06); transition: transform 1.8s var(--ease); }
+html.js .img-reveal.is-in { opacity: 1; }
+html.js .img-reveal.is-in img { transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
-	html.js .reveal { opacity: 1; transform: none; }
+	html.js .reveal, html.js .img-reveal { opacity: 1; transform: none; }
 	html.js .door-reveal::before, html.js .door-reveal::after { display: none; }
 }
 
@@ -1076,14 +1083,6 @@ html.js .door-reveal.is-in img { transform: none; }
 	background: linear-gradient(100deg, rgba(7, 47, 82, .92) 0%, rgba(7, 47, 82, .7) 45%, rgba(11, 80, 137, .25));
 }
 @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
-
-/* 下層ヘッダーでも扉が開く演出 */
-.page-hero__door { position: absolute; inset: 0; z-index: 1; display: flex; pointer-events: none; }
-.page-hero__door span { flex: 1; background: var(--navy-deep); animation: doorL 1.1s var(--ease-door) .1s forwards; }
-.page-hero__door span + span { animation-name: doorR; background: #0a3d6a; }
-@keyframes doorL { to { transform: translateX(-101%); } }
-@keyframes doorR { to { transform: translateX(101%); } }
-html:not(.js) .page-hero__door { display: none; }
 
 .page-hero__inner { position: relative; z-index: 2; }
 .page-hero__en {

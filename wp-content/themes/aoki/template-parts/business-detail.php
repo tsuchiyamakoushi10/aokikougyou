@@ -28,7 +28,7 @@ aoki_page_hero(
 			<p class="biz-intro__motto reveal"><span>モットー</span><?php echo esc_html( $b['motto'] ); ?></p>
 			<p class="biz-intro__text reveal"><?php echo esc_html( $b['intro'] ); ?></p>
 		</div>
-		<figure class="biz-intro__media door-reveal"><?php echo aoki_img( $b['image2'], '' ); // phpcs:ignore ?></figure>
+		<figure class="biz-intro__media img-reveal"><?php echo aoki_img( $b['image2'], '' ); // phpcs:ignore ?></figure>
 	</div>
 </section>
 

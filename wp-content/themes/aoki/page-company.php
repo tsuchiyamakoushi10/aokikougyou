@@ -48,7 +48,7 @@ aoki_page_hero(
 
 <section class="section section--soft message" id="message">
 	<div class="container message__grid">
-		<figure class="message__photo door-reveal">
+		<figure class="message__photo img-reveal">
 			<?php echo aoki_img( 'staff/president.webp', '代表取締役会長 中本 祥二' ); // phpcs:ignore ?>
 		</figure>
 		<div class="message__body">

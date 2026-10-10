@@ -18,9 +18,14 @@ PAGES = ['/', '/company/', '/business/', '/business/automatic-door/', '/business
 def fetch(path):
     try:
         with urllib.request.urlopen(BASE + path) as r:
-            return r.read().decode('utf-8')
+            html = r.read().decode('utf-8')
     except urllib.error.HTTPError as e:
-        return e.read().decode('utf-8')
+        html = e.read().decode('utf-8')
+    # WordPress が正常に表示できていないページは公開しない
+    if len(html) < 5000 or '</html>' not in html:
+        raise SystemExit('ERROR: %s の内容が取得できませんでした（%d バイト）。WordPress の表示を確認してください。\n'
+                         'ヒント：git でブランチを切り替えた後は docker compose up -d --force-recreate wordpress' % (path, len(html)))
+    return html
 
 def clean(html):
     html = re.sub(r'<link[^>]+(wp-json|xmlrpc|EditURI|shortlink|oembed)[^>]*>\n?', '', html)
