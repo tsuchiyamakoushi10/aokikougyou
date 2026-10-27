@@ -13,7 +13,6 @@ $works    = aoki_get_works( 3 );
 <section class="hero" id="hero" aria-label="メインビジュアル">
 	<div class="hero__scene" aria-hidden="true">
 		<picture class="hero__photo">
-			<source media="(max-width: 767px)" srcset="<?php echo esc_url( aoki_asset( 'photo/hero-team-sp.webp' ) ); ?>">
 			<img src="<?php echo esc_url( aoki_asset( 'photo/hero-team.webp' ) ); ?>" alt="" width="1920" height="1440" fetchpriority="high">
 		</picture>
 		<div class="hero__light"></div>
