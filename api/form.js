@@ -2,7 +2,13 @@
  * お問い合わせ／採用エントリーフォームの送信 API（Vercel Serverless Function）。
  * WordPress 版 inc/forms.php と同じ項目・同じ入力チェックです。
  *
- * 必要な環境変数（Vercel > Settings > Environment Variables）
+ * 送信先
+ *   1. Google フォーム … api/google-forms.json に設定があるフォームは、Google フォームの回答として記録する
+ *                        （設定は bin/google-form-map.py で作る。通知メールは Google フォーム側で設定）
+ *   2. メール（SMTP）  … 下の環境変数があれば、会社宛てのメールとお客様への自動返信も送る
+ *   どちらか一方でも届けば「送信完了」。両方とも未設定・失敗のときはエラーにする。
+ *
+ * メールを使う場合の環境変数（Vercel > Settings > Environment Variables）
  *   SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS  … 送信に使うメールサーバー
  *   MAIL_FROM        … 送信元アドレス（例: no-reply@aokikogyo.co.jp）
  *   MAIL_TO_CONTACT  … お問い合わせの受信先
@@ -14,12 +20,19 @@
  */
 const nodemailer = require('nodemailer');
 
+let GOOGLE_FORMS = {};
+try {
+  GOOGLE_FORMS = require('./google-forms.json');
+} catch (e) {
+  GOOGLE_FORMS = {};
+}
+
 const COMPANY = {
   name: '青木工業株式会社',
   zip: '331-0064',
   address: '埼玉県さいたま市西区佐知川302',
   tel: '048-623-5130',
-  url: 'https://www.aokikogyo.co.jp/',
+  url: 'https://www.aokikogyo-sk.com/',
 };
 
 const PREFS = '北海道,青森県,岩手県,宮城県,秋田県,山形県,福島県,茨城県,栃木県,群馬県,埼玉県,千葉県,東京都,神奈川県,新潟県,富山県,石川県,福井県,山梨県,長野県,岐阜県,静岡県,愛知県,三重県,滋賀県,京都府,大阪府,兵庫県,奈良県,和歌山県,鳥取県,島根県,岡山県,広島県,山口県,徳島県,香川県,愛媛県,高知県,福岡県,佐賀県,長崎県,熊本県,大分県,宮崎県,鹿児島県,沖縄県'.split(',');
@@ -147,6 +160,26 @@ async function turnstileOk(token, ip) {
   }
 }
 
+// Google フォームへ回答として送る
+async function sendToGoogleForm(conf, fields, v) {
+  const params = new URLSearchParams();
+  for (const [key, entry] of Object.entries(conf.entries || {})) {
+    const f = fields[key];
+    if (!f) continue;
+    let val = v[key];
+    if (f.type === 'name' || f.type === 'kana') val = `${val.sei} ${val.mei}`.trim();
+    if (f.type === 'address') val = val.pref + val.city + val.street;
+    if (val) params.append(entry, val);
+  }
+  const r = await fetch(conf.action, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params,
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!r.ok) throw new Error(`Google Forms responded ${r.status}`);
+}
+
 const encodeName = (n) => `=?UTF-8?B?${Buffer.from(n).toString('base64')}?=`;
 
 module.exports = async (req, res) => {
@@ -192,37 +225,55 @@ module.exports = async (req, res) => {
   const env = process.env;
   const to = formId === 'entry' ? env.MAIL_TO_ENTRY || env.MAIL_TO_CONTACT : env.MAIL_TO_CONTACT;
   const failMsg = `送信処理でエラーが発生しました。お手数ですが、時間をおいて再度お試しいただくか、お電話（${COMPANY.tel}）にてご連絡ください。`;
-  if (!env.SMTP_HOST || !env.MAIL_FROM || !to) {
-    console.error('Mail settings are missing (SMTP_HOST / MAIL_FROM / MAIL_TO_*)');
+  const gform = GOOGLE_FORMS[formId];
+  const smtpReady = Boolean(env.SMTP_HOST && env.MAIL_FROM && to);
+  if (!gform && !smtpReady) {
+    console.error('No destination: set api/google-forms.json or SMTP_HOST / MAIL_FROM / MAIL_TO_*');
     return reply(500, { ok: false, message: failMsg }, `${back}#form`);
   }
 
-  const transporter = nodemailer.createTransport({
-    host: env.SMTP_HOST,
-    port: Number(env.SMTP_PORT || 587),
-    secure: Number(env.SMTP_PORT) === 465,
-    auth: env.SMTP_USER ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined,
-  });
+  let delivered = false;
+  if (gform) {
+    try {
+      await sendToGoogleForm(gform, form.fields, values);
+      delivered = true;
+    } catch (err) {
+      console.error('Google Form submit failed:', err.message);
+    }
+  }
+
+  const transporter = smtpReady
+    ? nodemailer.createTransport({
+      host: env.SMTP_HOST,
+      port: Number(env.SMTP_PORT || 587),
+      secure: Number(env.SMTP_PORT) === 465,
+      auth: env.SMTP_USER ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined,
+    })
+    : null;
 
   const name = `${values.name.sei} ${values.name.mei}`;
   const text = body(form.fields, values);
   const now = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
 
-  try {
-    await transporter.sendMail({
-      from: env.MAIL_FROM,
-      to,
-      replyTo: values.email ? `${encodeName(name)} <${values.email}>` : undefined,
-      subject: form.subject,
-      text: `${form.title}フォームから送信がありました。\n\n${text}--\n送信日時：${now}\n`,
-    });
-  } catch (err) {
-    console.error('Admin mail failed:', err.message);
-    return reply(500, { ok: false, message: failMsg }, `${back}#form`);
+  if (transporter) {
+    try {
+      await transporter.sendMail({
+        from: env.MAIL_FROM,
+        to,
+        replyTo: values.email ? `${encodeName(name)} <${values.email}>` : undefined,
+        subject: form.subject,
+        text: `${form.title}フォームから送信がありました。\n\n${text}--\n送信日時：${now}\n`,
+      });
+      delivered = true;
+    } catch (err) {
+      console.error('Admin mail failed:', err.message);
+    }
   }
 
+  if (!delivered) return reply(500, { ok: false, message: failMsg }, `${back}#form`);
+
   // 自動返信（メールアドレスの入力があった場合のみ）
-  if (values.email) try {
+  if (transporter && values.email) try {
     await transporter.sendMail({
       from: `${encodeName(COMPANY.name)} <${env.MAIL_FROM}>`,
       to: values.email,
