@@ -683,9 +683,9 @@ html:not(.js) .hero__line > span { opacity: 1; transform: none; }
 
 /* --- 扉（白い背景のロゴが、扉のように左右に開くオープニング） --- */
 .intro {
-	position: absolute;
+	position: fixed;
 	inset: 0;
-	z-index: 5;
+	z-index: 200;
 	display: none;
 	pointer-events: none;
 	overflow: hidden;
@@ -729,10 +729,10 @@ html.intro-opened .intro__door--l { transform: translateX(-101%); box-shadow: 12
 html.intro-opened .intro__door--r { transform: translateX(101%); box-shadow: -12px 0 40px -12px rgba(7, 47, 82, .25); }
 
 .intro__skip {
-	position: absolute;
+	position: fixed;
 	right: var(--gutter);
 	bottom: 24px;
-	z-index: 6;
+	z-index: 201;
 	display: none;
 	padding: 6px 4px;
 	border: 0;
