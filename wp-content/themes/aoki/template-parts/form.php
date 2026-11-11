@@ -14,7 +14,6 @@ $sent    = isset( $_GET['sent'] ); // phpcs:ignore WordPress.Security.NonceVerif
 $c       = aoki_company();
 
 // 募集要項の「エントリーする」ボタンから来た場合は職種を選択済みにする。
-// 「まずは職場見学から」ボタンから来た場合は応募の種類も選択済みにする。
 if ( 'entry' === $form_id && empty( $state['values'] ) ) {
 	$job_map  = array(
 		'automatic-door' => '自動ドアメンテナンス',
@@ -22,7 +21,6 @@ if ( 'entry' === $form_id && empty( $state['values'] ) ) {
 	);
 	$type_map = array(
 		'talk'  => 'まずは話を聞きたい',
-		'visit' => '職場見学をしたい',
 		'apply' => '応募したい',
 	);
 	$job  = isset( $_GET['job'] ) ? sanitize_key( $_GET['job'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification

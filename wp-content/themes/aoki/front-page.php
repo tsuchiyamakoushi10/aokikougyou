@@ -111,8 +111,7 @@ $works    = aoki_get_works( 3 );
 		<p class="top-recruit__catch reveal">未経験から2ヶ月の研修で、<br>一人で現場を任されるまで。</p>
 		<p class="top-recruit__text reveal">自動ドア整備士・建具職人を募集しています。</p>
 		<div class="top-recruit__actions reveal">
-			<a class="btn btn--white" href="<?php echo esc_url( add_query_arg( 'type', 'visit', aoki_url( 'entry' ) ) ); ?>">まずは職場見学から<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
-			<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'recruit' ) . '#jobs' ); ?>">募集要項を見る</a>
+			<a class="btn btn--white" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>">詳しくはこちら<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
 		</div>
 	</div>
 </section>
