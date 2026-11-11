@@ -31,9 +31,8 @@ $works    = aoki_get_works( 3 );
 	<a class="hero__scroll" href="#about"><span>Scroll</span></a>
 
 	<div class="intro" id="intro" aria-hidden="true">
-		<div class="intro__door intro__door--l"></div>
-		<div class="intro__door intro__door--r"></div>
-		<div class="intro__seam"></div>
+		<div class="intro__door intro__door--l"><div class="intro__logo"><?php echo aoki_logo(); // phpcs:ignore ?></div></div>
+		<div class="intro__door intro__door--r"><div class="intro__logo"><?php echo aoki_logo(); // phpcs:ignore ?></div></div>
 	</div>
 	<button class="intro__skip" type="button" id="intro-skip">SKIP</button>
 </section>

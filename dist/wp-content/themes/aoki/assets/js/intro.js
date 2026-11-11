@@ -1,4 +1,4 @@
-/* TOP：扉の隙間から光が漏れ、扉が開いて幸せな時間が見えるオープニング */
+/* TOP：白い背景にロゴが現れ、ロゴが扉のように左右へ開いて写真が見えるオープニング */
 (function () {
 	'use strict';
 
@@ -22,15 +22,14 @@
 		if (finished) return;
 		finished = true;
 		timers.forEach(clearTimeout);
-		doc.classList.add('intro-ready', 'intro-crack', 'intro-opened', 'intro-done');
+		doc.classList.add('intro-ready', 'intro-opened', 'intro-done');
 		try { sessionStorage.setItem('aokiIntro', '1'); } catch (e) {}
 	}
 
 	function start() {
-		at(150, function () { doc.classList.add('intro-ready'); });   // 合わせ目に光の線
-		at(1500, function () { doc.classList.add('intro-crack'); });  // 扉がわずかに開き、光が強まる
-		at(2500, function () { doc.classList.add('intro-opened'); }); // 扉が開き、光の向こうに写真
-		at(4900, done);
+		at(150, function () { doc.classList.add('intro-ready'); });   // 白い背景にロゴが浮かぶ
+		at(1700, function () { doc.classList.add('intro-opened'); }); // ロゴが扉のように左右へ開く
+		at(4400, done);
 	}
 
 	// 写真の読み込みを待って開始（最大 1.2 秒）
@@ -50,8 +49,8 @@
 		if (finished) return;
 		if (!doc.classList.contains('intro-opened')) {
 			timers.forEach(clearTimeout);
-			doc.classList.add('intro-ready', 'intro-crack', 'intro-opened');
-			setTimeout(done, 1200);
+			doc.classList.add('intro-ready', 'intro-opened');
+			setTimeout(done, 2700);
 		} else {
 			done();
 		}
