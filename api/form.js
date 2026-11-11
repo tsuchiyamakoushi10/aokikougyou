@@ -7,6 +7,10 @@
  *   MAIL_FROM        … 送信元アドレス（例: no-reply@aokikogyo.co.jp）
  *   MAIL_TO_CONTACT  … お問い合わせの受信先
  *   MAIL_TO_ENTRY    … 採用エントリーの受信先（未設定時は MAIL_TO_CONTACT）
+ *
+ * 任意の環境変数
+ *   TURNSTILE_SECRET_KEY … Cloudflare Turnstile のシークレットキー。設定するとロボット判定を必須にする
+ *   ALLOWED_ORIGINS      … 送信を受け付けるサイトの URL（カンマ区切り）。未設定時は送信先と同じドメインのみ
  */
 const nodemailer = require('nodemailer');
 
@@ -97,6 +101,52 @@ function body(fields, v) {
   return out;
 }
 
+// ---- 守り（ロボット・連続送信・別サイトからの送信） ----
+
+// 同じ IP からの送信回数の上限（10分で5回）。サーバーの起動中だけ数える簡易版なので、
+// 本格的な上限は Vercel Firewall のレート制限ルールで設定する。
+const RATE = { windowMs: 10 * 60 * 1000, max: 5 };
+const hits = new Map();
+function rateLimited(ip) {
+  const now = Date.now();
+  const list = (hits.get(ip) || []).filter((t) => now - t < RATE.windowMs);
+  list.push(now);
+  hits.set(ip, list);
+  if (hits.size > 5000) hits.clear();
+  return list.length > RATE.max;
+}
+
+const clientIp = (req) => String(req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+
+// 別のサイトからこのフォームへ送らせる攻撃（CSRF）を防ぐ：ブラウザが付ける Origin を確かめる
+function sameOrigin(req) {
+  const origin = req.headers.origin;
+  if (!origin) return true; // Origin を付けないのはブラウザ以外（ブラウザ経由の CSRF にはならない）
+  const allowed = (process.env.ALLOWED_ORIGINS || '').split(',').map((o) => o.trim()).filter(Boolean);
+  allowed.push(`https://${req.headers['x-forwarded-host'] || req.headers.host}`);
+  return allowed.includes(origin);
+}
+
+// Cloudflare Turnstile（ロボット判定）。TURNSTILE_SECRET_KEY があるときだけ必須にする
+async function turnstileOk(token, ip) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+  if (!token || token.length > 2048) return false;
+  try {
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+      signal: AbortSignal.timeout(8000),
+    });
+    const data = await r.json();
+    return data.success === true;
+  } catch (err) {
+    console.error('Turnstile verify failed:', err.message);
+    return false;
+  }
+}
+
 const encodeName = (n) => `=?UTF-8?B?${Buffer.from(n).toString('base64')}?=`;
 
 module.exports = async (req, res) => {
@@ -109,6 +159,14 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') return res.status(405).setHeader('Allow', 'POST').json({ ok: false, message: 'Method Not Allowed' });
 
+  if (!sameOrigin(req)) return res.status(403).json({ ok: false, message: '不正な送信です。' });
+
+  const ip = clientIp(req);
+  if (rateLimited(ip)) {
+    res.setHeader('Retry-After', '600');
+    return reply(429, { ok: false, message: `短い時間に何度も送信されたため、受付を一時的に止めています。時間をおいて再度お試しいただくか、お電話（${COMPANY.tel}）にてご連絡ください。` }, '/');
+  }
+
   const b = req.body && typeof req.body === 'object' ? req.body : {};
   const formId = str(b.form_id);
   const form = FORMS[formId];
@@ -119,6 +177,10 @@ module.exports = async (req, res) => {
   const started = parseInt(b._ts, 10) || 0;
   if (str(b.website) || (started && Date.now() / 1000 - started < 3)) {
     return reply(200, { ok: true, redirect: `${back}thanks/` }, `${back}thanks/`);
+  }
+
+  if (!(await turnstileOk(str(b['cf-turnstile-response'], 4096), ip))) {
+    return reply(400, { ok: false, message: 'ロボットではないことの確認ができませんでした。もう一度お試しください。' }, `${back}#form`);
   }
 
   const values = collect(form.fields, b);

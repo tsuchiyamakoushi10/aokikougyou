@@ -185,6 +185,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 			</div>
 		<?php endforeach; ?>
 
+		<!--aoki:turnstile-->
 		<div class="form__submit">
 			<button type="submit" class="btn btn--primary btn--lg">入力内容を送信する<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></button>
 			<p class="form__privacy">ご入力いただいた個人情報は、お問い合わせへの回答・ご連絡のためにのみ使用し、適切に管理いたします。</p>
