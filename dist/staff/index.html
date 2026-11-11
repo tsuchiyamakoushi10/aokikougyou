@@ -23,7 +23,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <link rel='stylesheet' id='aoki-fonts-css' href='https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&#038;family=Montserrat:wght@500;600;700&#038;display=swap' media='all' />
-<link rel='stylesheet' id='aoki-main-css' href='/wp-content/themes/aoki/assets/css/main.css?ver=1794401190' media='all' />
+<link rel='stylesheet' id='aoki-main-css' href='/wp-content/themes/aoki/assets/css/main.css?ver=1794403763' media='all' />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6QXL21MTQ1"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6QXL21MTQ1');</script>
 </head>
@@ -38,23 +38,22 @@
 		<nav class="gnav" aria-label="メインメニュー">
 			<ul class="gnav__list">
 														<li class="gnav__item">
-						<a class="gnav__link" href="/business/automatic-door/">
-							<span class="gnav__ja">自動ドア事業</span>
-						</a>
-											</li>
-														<li class="gnav__item">
-						<a class="gnav__link" href="/business/fittings/">
-							<span class="gnav__ja">建具事業</span>
-						</a>
-											</li>
-														<li class="gnav__item">
-						<a class="gnav__link" href="/works/">
-							<span class="gnav__ja">施工事例</span>
-						</a>
-											</li>
-														<li class="gnav__item">
 						<a class="gnav__link" href="/company/">
 							<span class="gnav__ja">会社案内</span>
+						</a>
+											</li>
+														<li class="gnav__item has-children">
+						<a class="gnav__link" href="/business/">
+							<span class="gnav__ja">事業紹介</span>
+						</a>
+													<ul class="gnav__sub">
+																	<li><a href="/business/automatic-door/">自動ドア事業<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+																	<li><a href="/business/fittings/">建具事業<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+															</ul>
+											</li>
+														<li class="gnav__item">
+						<a class="gnav__link" href="/recruit/">
+							<span class="gnav__ja">採用情報</span>
 						</a>
 											</li>
 														<li class="gnav__item is-current">
@@ -63,8 +62,8 @@
 						</a>
 											</li>
 														<li class="gnav__item">
-						<a class="gnav__link" href="/recruit/">
-							<span class="gnav__ja">採用情報</span>
+						<a class="gnav__link" href="/works/">
+							<span class="gnav__ja">施工事例</span>
 						</a>
 											</li>
 														<li class="gnav__item">
@@ -79,6 +78,7 @@
 			<a class="header-tel" href="tel:0486235130">
 				<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>				<span class="header-tel__body"><span class="header-tel__num">048-623-5130</span><span class="header-tel__note">24時間サポート体制</span></span>
 			</a>
+			<a class="header-insta" href="https://www.instagram.com/aokikougyou01" target="_blank" rel="noopener" aria-label="Instagram（新しいタブで開きます）"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></a>
 			<a class="btn btn--recruit btn--sm header-contact" href="/recruit/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>採用情報</a>
 			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="drawer" aria-label="メニューを開く">
 				<span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
@@ -94,22 +94,23 @@
 			<ul class="drawer__nav">
 				<li><a href="/"><span class="drawer__en">Top</span>トップ</a></li>
 									<li>
-						<a href="/business/automatic-door/"><span class="drawer__en">Automatic Door</span>自動ドア事業</a>
-											</li>
-									<li>
-						<a href="/business/fittings/"><span class="drawer__en">Steel Fittings</span>建具事業</a>
-											</li>
-									<li>
-						<a href="/works/"><span class="drawer__en">Works</span>施工事例</a>
-											</li>
-									<li>
 						<a href="/company/"><span class="drawer__en">Company</span>会社案内</a>
+											</li>
+									<li>
+						<a href="/business/"><span class="drawer__en">Business</span>事業紹介</a>
+													<ul class="drawer__sub">
+																	<li><a href="/business/automatic-door/">自動ドア事業</a></li>
+																	<li><a href="/business/fittings/">建具事業</a></li>
+															</ul>
+											</li>
+									<li>
+						<a href="/recruit/"><span class="drawer__en">Recruit</span>採用情報</a>
 											</li>
 									<li>
 						<a href="/staff/"><span class="drawer__en">Staff</span>スタッフ紹介</a>
 											</li>
 									<li>
-						<a href="/recruit/"><span class="drawer__en">Recruit</span>採用情報</a>
+						<a href="/works/"><span class="drawer__en">Works</span>施工事例</a>
 											</li>
 									<li>
 						<a href="/contact/"><span class="drawer__en">Contact</span>お問い合わせ</a>
@@ -119,6 +120,7 @@
 		<div class="drawer__cta">
 			<a class="btn btn--recruit btn--block" href="/recruit/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>採用情報</a>
 			<a class="btn btn--outline btn--block" href="/contact/"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>お問い合わせ</a>
+			<a class="btn btn--insta btn--block" href="https://www.instagram.com/aokikougyou01" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>Instagramを見る</a>
 			<a class="drawer__tel" href="tel:0486235130"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>048-623-5130</a>
 		</div>
 	</div>
@@ -143,35 +145,35 @@
 							<li class="reveal">
 					<a href="#staff-a">
 						<span class="staff-index__media"><img src="/wp-content/themes/aoki/assets/img/staff/staff-a.webp" alt="" loading="lazy" decoding="async" width="900" height="1200"></span>
-						<span class="staff-index__name">Aさん</span>
+						<span class="staff-index__name">異業種から飛び込んだ期待の新人</span>
 						<span class="staff-index__career">入社半年（2024年時点）</span>
 					</a>
 				</li>
 							<li class="reveal">
 					<a href="#staff-b">
 						<span class="staff-index__media"><img src="/wp-content/themes/aoki/assets/img/staff/staff-b.webp" alt="" loading="lazy" decoding="async" width="900" height="1200"></span>
-						<span class="staff-index__name">Bさん</span>
+						<span class="staff-index__name">21年、街の扉を支えてきたベテラン</span>
 						<span class="staff-index__career">勤続21年目（2024年時点）</span>
 					</a>
 				</li>
 							<li class="reveal">
 					<a href="#staff-c">
 						<span class="staff-index__media"><img src="/wp-content/themes/aoki/assets/img/staff/staff-c.webp" alt="" loading="lazy" decoding="async" width="900" height="1200"></span>
-						<span class="staff-index__name">Cさん</span>
+						<span class="staff-index__name">多彩な経験を活かす点検のプロ</span>
 						<span class="staff-index__career">入社9年目（2024年時点）</span>
 					</a>
 				</li>
 							<li class="reveal">
 					<a href="#staff-d">
 						<span class="staff-index__media"><img src="/wp-content/themes/aoki/assets/img/staff/staff-d.webp" alt="" loading="lazy" decoding="async" width="900" height="1200"></span>
-						<span class="staff-index__name">Dさん</span>
+						<span class="staff-index__name">点検から設置までこなすオールラウンダー</span>
 						<span class="staff-index__career">プログラマーから転身</span>
 					</a>
 				</li>
 							<li class="reveal">
 					<a href="#staff-e">
 						<span class="staff-index__media"><img src="/wp-content/themes/aoki/assets/img/staff/staff-e.webp" alt="" loading="lazy" decoding="async" width="900" height="1200"></span>
-						<span class="staff-index__name">Eさん</span>
+						<span class="staff-index__name">元自動車整備士の機械好き</span>
 						<span class="staff-index__career">勤続13年目（2024年時点）</span>
 					</a>
 				</li>
@@ -182,13 +184,13 @@
 	<article class="interview" id="staff-a">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-a.webp" alt="Aさんの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
+				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-a.webp" alt="異業種から飛び込んだ期待の新人の写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>01</span></p>
 			</div>
 			<div class="interview__body">
 				<p class="interview__career">入社半年（2024年時点）</p>
 				<h2 class="interview__catch">自分の手で完成まで携われる達成感</h2>
-				<p class="interview__name">Aさん</p>
+				<p class="interview__name">異業種から飛び込んだ期待の新人</p>
 				<dl class="qa">
 											<div class="qa__item reveal">
 							<dt>これまでのキャリア</dt>
@@ -217,13 +219,13 @@
 	<article class="interview interview--reverse section--soft" id="staff-b">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-b.webp" alt="Bさんの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
+				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-b.webp" alt="21年、街の扉を支えてきたベテランの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>02</span></p>
 			</div>
 			<div class="interview__body">
 				<p class="interview__career">勤続21年目（2024年時点）</p>
 				<h2 class="interview__catch">街で自分の仕事に出会える喜び</h2>
-				<p class="interview__name">Bさん</p>
+				<p class="interview__name">21年、街の扉を支えてきたベテラン</p>
 				<dl class="qa">
 											<div class="qa__item reveal">
 							<dt>これまでのキャリア</dt>
@@ -252,13 +254,13 @@
 	<article class="interview" id="staff-c">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-c.webp" alt="Cさんの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
+				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-c.webp" alt="多彩な経験を活かす点検のプロの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>03</span></p>
 			</div>
 			<div class="interview__body">
 				<p class="interview__career">入社9年目（2024年時点）</p>
 				<h2 class="interview__catch">成長を肌で感じられる仕事</h2>
-				<p class="interview__name">Cさん</p>
+				<p class="interview__name">多彩な経験を活かす点検のプロ</p>
 				<dl class="qa">
 											<div class="qa__item reveal">
 							<dt>これまでのキャリア</dt>
@@ -287,13 +289,13 @@
 	<article class="interview interview--reverse section--soft" id="staff-d">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-d.webp" alt="Dさんの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
+				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-d.webp" alt="点検から設置までこなすオールラウンダーの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>04</span></p>
 			</div>
 			<div class="interview__body">
 				<p class="interview__career">プログラマーから転身</p>
 				<h2 class="interview__catch">決め手は「人の温かさ」</h2>
-				<p class="interview__name">Dさん</p>
+				<p class="interview__name">点検から設置までこなすオールラウンダー</p>
 				<dl class="qa">
 											<div class="qa__item reveal">
 							<dt>これまでのキャリア</dt>
@@ -322,13 +324,13 @@
 	<article class="interview" id="staff-e">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-e.webp" alt="Eさんの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
+				<figure class="interview__photo img-reveal"><img src="/wp-content/themes/aoki/assets/img/staff/staff-e.webp" alt="元自動車整備士の機械好きの写真" loading="lazy" decoding="async" width="900" height="1200"></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>05</span></p>
 			</div>
 			<div class="interview__body">
 				<p class="interview__career">勤続13年目（2024年時点）</p>
 				<h2 class="interview__catch">お客様の「ありがとう」が原動力</h2>
-				<p class="interview__name">Eさん</p>
+				<p class="interview__name">元自動車整備士の機械好き</p>
 				<dl class="qa">
 											<div class="qa__item reveal">
 							<dt>これまでのキャリア</dt>
@@ -412,6 +414,17 @@
 				</div>
 			</div>
 			</div>
+	<div class="container">
+		<a class="insta-band reveal" href="https://www.instagram.com/aokikougyou01" target="_blank" rel="noopener">
+			<span class="insta-band__icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></span>
+			<span class="insta-band__body">
+				<span class="insta-band__en">Instagram</span>
+				<span class="insta-band__title">現場の様子や日々の仕事を発信中</span>
+				<span class="insta-band__id">@aokikougyou01</span>
+			</span>
+			<span class="insta-band__btn">フォローする<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+		</a>
+	</div>
 </section>
 </main>
 

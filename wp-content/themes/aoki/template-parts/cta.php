@@ -35,4 +35,15 @@ $mode = $args['mode'] ?? 'both';
 			</div>
 		<?php endif; ?>
 	</div>
+	<div class="container">
+		<a class="insta-band reveal" href="<?php echo esc_url( $c['instagram'] ); ?>" target="_blank" rel="noopener">
+			<span class="insta-band__icon"><?php echo aoki_icon( 'insta' ); // phpcs:ignore ?></span>
+			<span class="insta-band__body">
+				<span class="insta-band__en">Instagram</span>
+				<span class="insta-band__title">現場の様子や日々の仕事を発信中</span>
+				<span class="insta-band__id">@<?php echo esc_html( basename( untrailingslashit( $c['instagram'] ) ) ); ?></span>
+			</span>
+			<span class="insta-band__btn">フォローする<?php echo aoki_icon( 'arrow' ); // phpcs:ignore ?></span>
+		</a>
+	</div>
 </section>

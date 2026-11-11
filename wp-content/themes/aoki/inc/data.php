@@ -41,12 +41,19 @@ function aoki_company() {
  */
 function aoki_nav() {
 	return array(
-		array( 'label' => '自動ドア事業', 'en' => 'Automatic Door', 'path' => 'business/automatic-door' ),
-		array( 'label' => '建具事業', 'en' => 'Steel Fittings', 'path' => 'business/fittings' ),
-		array( 'label' => '施工事例', 'en' => 'Works', 'path' => 'works' ),
 		array( 'label' => '会社案内', 'en' => 'Company', 'path' => 'company' ),
-		array( 'label' => 'スタッフ紹介', 'en' => 'Staff', 'path' => 'staff' ),
+		array(
+			'label'    => '事業紹介',
+			'en'       => 'Business',
+			'path'     => 'business',
+			'children' => array(
+				array( 'label' => '自動ドア事業', 'path' => 'business/automatic-door' ),
+				array( 'label' => '建具事業', 'path' => 'business/fittings' ),
+			),
+		),
 		array( 'label' => '採用情報', 'en' => 'Recruit', 'path' => 'recruit' ),
+		array( 'label' => 'スタッフ紹介', 'en' => 'Staff', 'path' => 'staff' ),
+		array( 'label' => '施工事例', 'en' => 'Works', 'path' => 'works' ),
 		array( 'label' => 'お問い合わせ', 'en' => 'Contact', 'path' => 'contact' ),
 	);
 }
@@ -231,7 +238,7 @@ function aoki_staff() {
 	return array(
 		array(
 			'id'      => 'a',
-			'name'    => 'Aさん',
+			'name'    => '異業種から飛び込んだ期待の新人',
 			'catch'   => '自分の手で完成まで携われる達成感',
 			'career'  => '入社半年（2024年時点）',
 			'image'   => 'staff/staff-a.webp',
@@ -245,7 +252,7 @@ function aoki_staff() {
 		),
 		array(
 			'id'      => 'b',
-			'name'    => 'Bさん',
+			'name'    => '21年、街の扉を支えてきたベテラン',
 			'catch'   => '街で自分の仕事に出会える喜び',
 			'career'  => '勤続21年目（2024年時点）',
 			'image'   => 'staff/staff-b.webp',
@@ -259,7 +266,7 @@ function aoki_staff() {
 		),
 		array(
 			'id'      => 'c',
-			'name'    => 'Cさん',
+			'name'    => '多彩な経験を活かす点検のプロ',
 			'catch'   => '成長を肌で感じられる仕事',
 			'career'  => '入社9年目（2024年時点）',
 			'voice'   => '直行直帰のスタイルなので、自分の時間をしっかり確保できます。',
@@ -274,7 +281,7 @@ function aoki_staff() {
 		),
 		array(
 			'id'      => 'd',
-			'name'    => 'Dさん',
+			'name'    => '点検から設置までこなすオールラウンダー',
 			'catch'   => '決め手は「人の温かさ」',
 			'career'  => 'プログラマーから転身',
 			'image'   => 'staff/staff-d.webp',
@@ -288,7 +295,7 @@ function aoki_staff() {
 		),
 		array(
 			'id'      => 'e',
-			'name'    => 'Eさん',
+			'name'    => '元自動車整備士の機械好き',
 			'catch'   => 'お客様の「ありがとう」が原動力',
 			'career'  => '勤続13年目（2024年時点）',
 			'voice'   => 'お客様に喜んでもらえると、この仕事を選んでよかったと実感します。',
