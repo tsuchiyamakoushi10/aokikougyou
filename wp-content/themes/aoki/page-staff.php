@@ -60,8 +60,7 @@ aoki_page_hero(
 	<div class="container center">
 		<p class="staff-cta__title reveal">この仲間と働いてみませんか</p>
 		<div class="staff-cta__actions reveal">
-			<a class="btn btn--primary btn--lg" href="<?php echo esc_url( add_query_arg( 'type', 'visit', aoki_url( 'entry' ) ) ); ?>">まずは職場見学から<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
-			<a class="btn btn--outline btn--lg" href="<?php echo esc_url( aoki_url( 'recruit' ) . '#jobs' ); ?>">募集要項を見る</a>
+			<a class="btn btn--primary btn--lg" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>">詳しくはこちら<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
 		</div>
 	</div>
 </section>

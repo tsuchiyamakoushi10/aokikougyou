@@ -39,7 +39,7 @@ const FORMS = {
     title: '採用エントリー',
     subject: '【青木工業】採用エントリーがありました',
     fields: {
-      type: { label: '応募の種類', type: 'radio', required: true, options: ['まずは話を聞きたい', '職場見学をしたい', '応募したい'] },
+      type: { label: '応募の種類', type: 'radio', required: true, options: ['まずは話を聞きたい', '応募したい'] },
       job: { label: '応募職種', type: 'radio', required: true, options: ['自動ドアメンテナンス', '建具取付', 'まだ決めていない'] },
       name: { label: 'お名前', type: 'name', required: true },
       kana: { label: 'フリガナ', type: 'kana', required: true },

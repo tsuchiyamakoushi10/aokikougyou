@@ -160,7 +160,7 @@
 		});
 	}
 
-	// 「まずは職場見学から」などのボタンから来た場合、選択肢を選んだ状態にする（静的サイト版用）
+	// 募集要項の「エントリーする」ボタンなどから来た場合、選択肢を選んだ状態にする（静的サイト版用）
 	(function () {
 		var q = new URLSearchParams(location.search);
 		var pick = function (name, value) {
@@ -169,7 +169,7 @@
 			group.forEach(function (r) { if (r.value === value) r.checked = true; });
 		};
 		var jobs = { 'automatic-door': '自動ドアメンテナンス', fittings: '建具取付' };
-		var types = { talk: 'まずは話を聞きたい', visit: '職場見学をしたい', apply: '応募したい' };
+		var types = { talk: 'まずは話を聞きたい', apply: '応募したい' };
 		if (types[q.get('type')]) pick('type', types[q.get('type')]);
 		if (jobs[q.get('job')]) { pick('job', jobs[q.get('job')]); pick('type', types.apply); }
 	})();
