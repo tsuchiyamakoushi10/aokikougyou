@@ -49,6 +49,7 @@ $c = aoki_company();
 				<?php echo aoki_icon( 'tel' ); // phpcs:ignore ?>
 				<span class="header-tel__body"><span class="header-tel__num"><?php echo esc_html( $c['tel'] ); ?></span><span class="header-tel__note">24時間サポート体制</span></span>
 			</a>
+			<a class="header-insta" href="<?php echo esc_url( $c['instagram'] ); ?>" target="_blank" rel="noopener" aria-label="Instagram（新しいタブで開きます）"><?php echo aoki_icon( 'insta' ); // phpcs:ignore ?></a>
 			<a class="btn btn--recruit btn--sm header-contact" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>採用情報</a>
 			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="drawer" aria-label="メニューを開く">
 				<span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
@@ -80,6 +81,7 @@ $c = aoki_company();
 		<div class="drawer__cta">
 			<a class="btn btn--recruit btn--block" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>採用情報</a>
 			<a class="btn btn--outline btn--block" href="<?php echo esc_url( aoki_url( 'contact' ) ); ?>"><?php echo aoki_icon( 'mail' ); // phpcs:ignore ?>お問い合わせ</a>
+			<a class="btn btn--insta btn--block" href="<?php echo esc_url( $c['instagram'] ); ?>" target="_blank" rel="noopener"><?php echo aoki_icon( 'insta' ); // phpcs:ignore ?>Instagramを見る</a>
 			<a class="drawer__tel" href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo aoki_icon( 'tel' ); // phpcs:ignore ?><?php echo esc_html( $c['tel'] ); ?></a>
 		</div>
 	</div>

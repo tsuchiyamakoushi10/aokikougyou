@@ -3,6 +3,7 @@
    ========================================================================== */
 
 :root {
+	--insta: linear-gradient(45deg, #f9a03f 0%, #e1306c 50%, #833ab4 100%);
 	--blue: #1976d2;
 	--blue-dark: #145fa9;
 	--navy: #0b5089;
@@ -369,6 +370,20 @@ html.intro-opened:not(.intro-done) .site-header--overlay { transition-delay: 2.4
 .header-tel__note { font-size: 11px; color: var(--muted); }
 .header-contact { display: none; }
 
+/* Instagram（ヘッダーのアイコン） */
+.header-insta {
+	display: none;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	color: var(--navy);
+	transition: color .3s var(--ease), background .3s var(--ease);
+}
+.header-insta .icon { width: 22px; height: 22px; }
+.header-insta:hover { color: #fff; background: var(--insta); }
+.site-header--overlay:not(.is-scrolled) .header-insta { color: #fff; }
+
 .menu-toggle {
 	position: relative;
 	width: 52px;
@@ -405,6 +420,7 @@ html.intro-opened:not(.intro-done) .site-header--overlay { transition-delay: 2.4
 
 @media (min-width: 768px) {
 	.header-contact { display: inline-flex; }
+	.header-insta { display: grid; }
 }
 @media (min-width: 1100px) {
 	.gnav { display: block; }
@@ -464,6 +480,8 @@ html.intro-opened:not(.intro-done) .site-header--overlay { transition-delay: 2.4
 .drawer__sub a::before { content: "—"; color: #9fcbff; margin-right: 4px; }
 .drawer__cta { display: grid; gap: 12px; margin-top: 32px; }
 .drawer__cta .btn--outline { --fg: #fff; --bd: rgba(255, 255, 255, .6); }
+.btn--insta { color: #fff; background: var(--insta); border-color: transparent; }
+.btn--insta:hover { color: #fff; opacity: .9; }
 .drawer__tel {
 	display: flex;
 	align-items: center;
@@ -483,7 +501,8 @@ html.is-drawer-open .site-header .menu-toggle,
 html.is-drawer-open .site-header .header-tel { color: #fff; }
 html.is-drawer-open .site-header .logo__mark path:nth-child(1) { fill: #fff; }
 html.is-drawer-open .site-header .menu-toggle { border-color: rgba(255, 255, 255, .5); }
-html.is-drawer-open .header-contact { display: none; }
+html.is-drawer-open .header-contact,
+html.is-drawer-open .header-insta { display: none; }
 
 /* ---------- Mobile fixed bar ---------- */
 
@@ -973,6 +992,32 @@ html.js .img-reveal.is-in img { transform: none; }
 .cta__en { margin: 0 0 4px; font-family: var(--font-en); font-size: 13px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .7); }
 .cta__title { color: #fff; font-size: clamp(20px, 2.4vw, 26px); margin-bottom: 12px; }
 .cta__text { color: rgba(255, 255, 255, .88); font-size: 14px; }
+/* Instagram への帯（各ページ下部） */
+.insta-band {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px 20px;
+	margin-top: 20px;
+	padding: 20px clamp(20px, 3vw, 36px);
+	border-radius: var(--radius);
+	background: #fff;
+	color: var(--ink);
+	text-decoration: none;
+	box-shadow: 0 2px 0 rgba(7, 47, 82, .04);
+	transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.insta-band:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 0 10px 28px -12px rgba(7, 47, 82, .3); }
+.insta-band__icon { display: grid; place-items: center; flex: none; width: 56px; height: 56px; border-radius: 16px; background: var(--insta); color: #fff; }
+.insta-band__icon .icon { width: 30px; height: 30px; }
+.insta-band__body { display: flex; flex-direction: column; flex: 1 1 220px; line-height: 1.5; }
+.insta-band__en { font-family: var(--font-en); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
+.insta-band__title { font-size: clamp(16px, 1.8vw, 19px); font-weight: 700; word-break: auto-phrase; }
+.insta-band__id { font-family: var(--font-en); font-size: 13px; color: var(--muted); }
+.insta-band__btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 999px; background: var(--insta); color: #fff; font-size: 14px; font-weight: 700; }
+.insta-band__btn .icon { width: 16px; height: 16px; }
+@media (max-width: 599px) { .insta-band__btn { width: 100%; justify-content: center; } }
+
 .cta__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 24px; }
 .cta__tel { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; line-height: 1.2; }
 .cta__tel:hover { color: #fff; }
@@ -1349,7 +1394,7 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
 .staff-index a:hover { background: #e4ecf4; color: var(--ink); }
 .staff-index__media { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin-bottom: 8px; border: 3px solid #fff; }
 .staff-index__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
-.staff-index__name { font-weight: 700; }
+.staff-index__name { margin-bottom: 4px; font-size: 14px; font-weight: 700; line-height: 1.6; text-align: center; word-break: auto-phrase; }
 .staff-index__career { font-size: 12px; color: var(--muted); }
 
 .interview { padding-block: clamp(64px, 9vw, 112px); scroll-margin-top: var(--header-h); }
