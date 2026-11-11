@@ -5,6 +5,39 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "aokikogyo-sk.com"
+        }
+      ],
+      "destination": "https://www.aokikogyo-sk.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "aokikogyo.co.jp"
+        }
+      ],
+      "destination": "https://www.aokikogyo-sk.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aokikogyo.co.jp"
+        }
+      ],
+      "destination": "https://www.aokikogyo-sk.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
@@ -104,7 +137,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-3u2VtgrFXP0aiWDaFMJrKjLD2zoSCAcbOuGQsWVtAJg=' 'sha256-6otzu6SEm1G32wJX44CI31ML9LNkW6GP409Faw9f0go=' 'sha256-HQ6wGfFSsJbz0g+K6OpcXls9SAg7qzOdhYEFLAvzRd4=' 'sha256-yEGyL1EaAPwWR5a/9CCCxw5rU3BM4vguiNRL2xnYuTo=' https://www.googletagmanager.com https://zipcloud.ibsnet.co.jp https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; frame-src https://www.google.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp"
+          "value": "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-3u2VtgrFXP0aiWDaFMJrKjLD2zoSCAcbOuGQsWVtAJg=' 'sha256-6otzu6SEm1G32wJX44CI31ML9LNkW6GP409Faw9f0go=' 'sha256-HQ6wGfFSsJbz0g+K6OpcXls9SAg7qzOdhYEFLAvzRd4=' 'sha256-n/MD4zkKZDtAgIIGv7JQluSy8MEh/MUlNR7R+ZCGyHQ=' 'sha256-s+F0JN3HcBBEfzxrXXKsVYzzONCZalveVVqPw3Tyq8o=' 'sha256-yEGyL1EaAPwWR5a/9CCCxw5rU3BM4vguiNRL2xnYuTo=' https://www.googletagmanager.com https://zipcloud.ibsnet.co.jp https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; frame-src https://www.google.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp"
         }
       ]
     },

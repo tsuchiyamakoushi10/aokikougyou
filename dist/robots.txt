@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /api/
 
-Sitemap: https://www.aokikogyo.co.jp/sitemap.xml
+Sitemap: https://www.aokikogyo-sk.com/sitemap.xml

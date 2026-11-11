@@ -13,7 +13,7 @@ import base64, hashlib, json, os, re, shutil, subprocess, urllib.request, urllib
 from datetime import date
 
 BASE = 'http://localhost:8080'
-SITE = os.environ.get('SITE_URL', 'https://www.aokikogyo.co.jp').rstrip('/')
+SITE = os.environ.get('SITE_URL', 'https://www.aokikogyo-sk.com').rstrip('/')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, 'dist')
 
