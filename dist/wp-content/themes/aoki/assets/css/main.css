@@ -1111,21 +1111,36 @@ html.js .img-reveal.is-in img { transform: none; }
 .breadcrumbs a:hover { color: var(--blue); text-decoration: underline; }
 
 .page-toc { margin-top: 8px; }
-.page-toc ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.page-toc ul { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+/* 数が奇数のときは、最後の1つを横いっぱいにして形をそろえる */
+.page-toc li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .page-toc a {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 8px;
-	padding: 8px 18px;
-	border: 1px solid var(--line);
+	height: 100%;
+	min-height: 48px;
+	padding: 10px 12px;
+	border: 1px solid #c9d6e3;
 	border-radius: 999px;
+	background: #fff;
 	color: var(--navy);
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 700;
+	line-height: 1.4;
+	text-align: center;
+	white-space: nowrap;
 	text-decoration: none;
 	transition: .3s var(--ease);
 }
-.page-toc a::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+.page-toc a::after { content: ""; flex: none; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+@media (min-width: 1024px) {
+	/* PCは横一列に同じ幅で並べる */
+	.page-toc ul { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 12px; }
+	.page-toc li:last-child:nth-child(odd) { grid-column: auto; }
+	.page-toc a { min-height: 52px; font-size: 15px; }
+}
 .page-toc a:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
 
 .prose p { margin-bottom: 1.4em; }
