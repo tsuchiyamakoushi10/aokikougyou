@@ -17,12 +17,12 @@ function aoki_meta_description() {
 	$pages = array(
 		'company'        => '青木工業株式会社の会社案内。企業理念「確かな技術で扉を開き、皆様に幸せな時間を」、代表挨拶、会社概要、アクセスをご紹介します。',
 		'business'       => '青木工業の事業紹介。自動ドアの施工・保守・メンテナンスと、鋼製建具の取り付け・金物工事・カーテンウォール施工を行っています。',
-		'automatic-door' => '商業施設や駅、コンビニなどの自動ドアや制御装置の設置、メンテナンス。緊急時は即日対応を心がけています。',
-		'fittings'       => '自動ドア、窓、シャッターの土台や枠、金物、サッシなどの設計、製造、取り付け。回転扉など特殊な施工もお任せください。',
-		'recruit'        => '青木工業の採用情報。未経験可・日給17,000円〜21,000円。資格取得支援や社用車支給など、安心して長く働ける環境です。',
+		'automatic-door' => 'さいたま市・川越市の青木工業。商業施設や駅、コンビニなどの自動ドアや制御装置の設置、点検・修理を行っています。緊急時は即日対応を心がけています。',
+		'fittings'       => '法人のお客様向けに、ビルのステンレスサッシ・鋼製建具・金物・カーテンウォールの設計・製造・取り付けを行っています。回転扉など特殊な施工もお任せください。',
+		'recruit'        => '未経験から2ヶ月の研修で一人立ち。月給375,000円〜462,500円、年間休日105日、残業月平均10時間。さいたま市西区の青木工業株式会社で、自動ドアメンテナンスと建具取付の正社員を募集しています。',
 		'staff'          => '青木工業で働くスタッフのインタビュー。入社のきっかけや仕事のやりがい、職場の雰囲気をご紹介します。',
-		'contact'        => '青木工業株式会社へのお問い合わせ。自動ドア・建具の施工、保守・メンテナンスのご相談はお気軽にご連絡ください。TEL 048-623-5130',
-		'entry'          => '青木工業株式会社の採用エントリーフォーム。自動ドア・建具スタッフを募集しています。',
+		'contact'        => '自動ドアの不具合・点検、建具・サッシ工事のご相談は青木工業株式会社へ。お急ぎの場合はお電話（048-623-5130）でどうぞ。',
+		'entry'          => '青木工業株式会社の採用エントリー。「まずは話を聞きたい」「職場見学をしたい」からでも受け付けています。',
 	);
 	if ( is_front_page() ) {
 		return $c['description'];
@@ -42,6 +42,45 @@ function aoki_meta_description() {
 	}
 	return $c['description'];
 }
+
+/**
+ * ページごとの title（検索結果に出る名前）。
+ */
+function aoki_document_titles() {
+	return array(
+		'company'        => '会社案内｜青木工業株式会社（さいたま市西区）',
+		'business'       => '事業紹介｜自動ドア・建具の青木工業',
+		'automatic-door' => '自動ドアの設置・点検・修理｜さいたま市・川越市の青木工業',
+		'fittings'       => '鋼製建具・サッシ・カーテンウォール工事｜青木工業',
+		'recruit'        => '自動ドア整備士・建具職人の求人｜さいたま市・川越市｜青木工業',
+		'staff'          => 'スタッフ紹介｜青木工業で働く人',
+		'entry'          => '採用エントリー｜青木工業',
+		'contact'        => 'お問い合わせ｜青木工業',
+	);
+}
+
+add_filter(
+	'pre_get_document_title',
+	function ( $title ) {
+		if ( aoki_seo_plugin_active() ) {
+			return $title;
+		}
+		if ( is_front_page() ) {
+			return '青木工業｜さいたま市・川越市の自動ドア施工・メンテナンスと建具工事';
+		}
+		if ( is_post_type_archive( 'works' ) ) {
+			return '施工事例｜自動ドア・建具の青木工業';
+		}
+		if ( is_page() ) {
+			$slug   = get_post_field( 'post_name', get_queried_object_id() );
+			$titles = aoki_document_titles();
+			if ( isset( $titles[ $slug ] ) ) {
+				return $titles[ $slug ];
+			}
+		}
+		return $title;
+	}
+);
 
 // canonical はテーマで出力するため、WordPress 標準の出力を止める（重複防止）。
 add_action(
@@ -90,7 +129,7 @@ add_action(
 					'postalCode'      => $c['zip'],
 					'addressRegion'   => '埼玉県',
 					'addressLocality' => 'さいたま市西区',
-					'streetAddress'   => '大字佐知川302',
+					'streetAddress'   => '佐知川302',
 					'addressCountry'  => 'JP',
 				),
 				'sameAs'    => array( $c['instagram'] ),

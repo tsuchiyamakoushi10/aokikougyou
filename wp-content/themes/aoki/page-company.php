@@ -70,7 +70,10 @@ aoki_page_hero(
 		<?php aoki_heading( 'Profile', '会社概要', 'h2', 'heading--center' ); ?>
 		<dl class="data-table reveal">
 			<div><dt>会社名</dt><dd><?php echo esc_html( $c['name'] ); ?></dd></div>
-			<div><dt>本社</dt><dd>〒<?php echo esc_html( $c['zip'] ); ?> 埼玉県さいたま市西区佐知川302<br>TEL：<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>　FAX：<?php echo esc_html( $c['fax'] ); ?></dd></div>
+			<div><dt>設立</dt><dd><?php echo esc_html( $c['founded'] ); ?></dd></div>
+			<div><dt>資本金</dt><dd><?php echo esc_html( $c['capital'] ); ?></dd></div>
+			<div><dt>従業員数</dt><dd><?php echo esc_html( $c['employees'] ); ?></dd></div>
+			<div><dt>本社</dt><dd>〒<?php echo esc_html( $c['zip'] ); ?> <?php echo esc_html( $c['address'] ); ?><br>TEL：<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>　FAX：<?php echo esc_html( $c['fax'] ); ?></dd></div>
 			<div><dt><?php echo esc_html( $c['branch']['name'] ); ?></dt><dd>〒<?php echo esc_html( $c['branch']['zip'] ); ?> <?php echo esc_html( $c['branch']['address'] ); ?><br>TEL：<a href="<?php echo esc_attr( aoki_tel_link( $c['branch']['tel'] ) ); ?>"><?php echo esc_html( $c['branch']['tel'] ); ?></a>　FAX：<?php echo esc_html( $c['branch']['fax'] ); ?></dd></div>
 			<div><dt>事業内容</dt><dd>
 				<ul class="data-table__list">
@@ -95,6 +98,7 @@ aoki_page_hero(
 				<h3 class="access__name">本社</h3>
 				<p>〒<?php echo esc_html( $c['zip'] ); ?><br><?php echo esc_html( $c['address'] ); ?></p>
 				<p>TEL：<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a><br>FAX：<?php echo esc_html( $c['fax'] ); ?></p>
+				<p class="access__route"><?php echo esc_html( $c['access'] ); ?></p>
 				<a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query=<?php echo rawurlencode( $c['address'] ); ?>" target="_blank" rel="noopener">Googleマップで開く<?php echo aoki_icon( 'arrow' ); // phpcs:ignore ?></a>
 				<h3 class="access__name"><?php echo esc_html( $c['branch']['name'] ); ?></h3>
 				<p>〒<?php echo esc_html( $c['branch']['zip'] ); ?><br><?php echo esc_html( $c['branch']['address'] ); ?></p>

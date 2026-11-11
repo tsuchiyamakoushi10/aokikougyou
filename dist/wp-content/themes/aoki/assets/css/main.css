@@ -204,6 +204,8 @@ button { font: inherit; color: inherit; }
 .btn--outline:hover { --bg: var(--navy); --fg: #fff; }
 .btn--white { --bg: #fff; --fg: var(--navy); --bd: #fff; }
 .btn--white:hover { --bg: var(--warm-soft); --bd: var(--warm-soft); --fg: var(--navy); }
+.btn--recruit { --bg: var(--warm); --fg: var(--navy-deep); --bd: var(--warm); }
+.btn--recruit:hover { --bg: #ffb23e; --bd: #ffb23e; --fg: var(--navy-deep); }
 .btn--ghost-white { --bg: transparent; --fg: #fff; --bd: rgba(255, 255, 255, .7); }
 .btn--ghost-white:hover { --bg: rgba(255, 255, 255, .12); --bd: #fff; }
 .btn--sm { min-height: 44px; padding: 8px 20px; font-size: 14px; }
@@ -1514,3 +1516,70 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
 .post-list a:hover { color: var(--blue); }
 .post-list time, .post-list__type { font-family: var(--font-en); font-size: 13px; color: var(--muted); min-width: 6em; }
 .post-date { color: var(--muted); font-family: var(--font-en); }
+
+/* ---------- 2026-11 原稿反映で追加 ---------- */
+
+/* TOP：数字で見る青木工業 */
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 28px 0 8px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.stats > div { padding: 16px 18px; background: #fff; }
+.stats dt { font-size: 13px; color: var(--muted); font-weight: 700; }
+.stats dd { margin: 4px 0 0; font-family: var(--font-en); font-size: clamp(28px, 3.4vw, 36px); font-weight: 700; line-height: 1.1; color: var(--navy); }
+.stats small { margin-left: 2px; font-family: var(--font); font-size: 14px; }
+@media (min-width: 640px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+
+.top-recruit__catch { margin-bottom: 16px; }
+.top-recruit__text { margin-bottom: 32px; font-size: clamp(15px, 1.6vw, 18px); color: rgba(255, 255, 255, .88); }
+
+/* TOP：スタッフの声（2人） */
+@media (min-width: 640px) { .top-staff .staff-cards { grid-template-columns: repeat(2, 1fr); max-width: 880px; margin-inline: auto; } }
+
+/* 採用：リード */
+.recruit-intro__lead { font-size: clamp(16px, 1.8vw, 18px); line-height: 2; }
+.recruit-intro__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+
+/* 採用：一人立ちまでの流れ */
+.steps { display: grid; gap: 20px; counter-reset: step; }
+@media (min-width: 768px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step { position: relative; padding: 28px 26px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.step__when { margin: 0 0 10px; font-weight: 700; color: var(--navy); }
+.step__when span { display: block; font-family: var(--font-en); font-size: 12px; letter-spacing: .14em; color: var(--blue); text-transform: uppercase; }
+.step__title { font-size: 18px; margin-bottom: 8px; }
+.step p { font-size: 14px; }
+
+/* 事業：3つの強み */
+@media (min-width: 900px) { .features:has(> :nth-child(3):last-child) { grid-template-columns: repeat(3, 1fr); } }
+
+/* 事業：対応エリア */
+.biz-area__list { display: flex; align-items: flex-start; gap: 10px; justify-content: center; font-size: 17px; font-weight: 700; color: var(--navy); text-align: left; }
+.biz-area__list .icon { flex: none; width: 24px; height: 24px; color: var(--blue); margin-top: 3px; }
+.biz-area__contact { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 24px; margin-top: 32px; padding: 24px; border-radius: var(--radius); background: #fff; text-align: center; }
+.biz-area__contact p { width: 100%; margin: 0; font-weight: 700; }
+.biz-area__tel { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-en); font-size: 22px; font-weight: 700; color: var(--navy); text-decoration: none; }
+.biz-area__tel .icon { width: 24px; height: 24px; }
+
+/* 会社案内：アクセス */
+.access__route { font-size: 14px; color: var(--muted); }
+
+/* スタッフ紹介：最後のボタン */
+.staff-cta { text-align: center; }
+.staff-cta__title { font-size: clamp(20px, 2.6vw, 28px); font-weight: 700; color: var(--navy); margin-bottom: 24px; }
+.staff-cta__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+
+/* フォーム：営業お断り */
+.form-intro--note { margin-top: -20px; font-size: 14px; color: var(--muted); }
+
+/* ヘッダー：ナビ7項目＋採用情報ボタン */
+.gnav__link { white-space: nowrap; font-size: 14px; padding-inline: 10px; }
+.header-contact { white-space: nowrap; }
+@media (min-width: 1100px) and (max-width: 1199px) {
+	.gnav { display: none; }
+	.menu-toggle { display: grid; }
+}
+@media (min-width: 1280px) {
+	.gnav__link { padding-inline: 12px; }
+	.header-tel { display: none; }
+}
+@media (min-width: 1440px) {
+	.gnav__link { padding-inline: 14px; font-size: 15px; }
+	.header-tel { display: flex; }
+}

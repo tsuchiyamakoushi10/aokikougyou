@@ -6,7 +6,7 @@
 get_header();
 $c        = aoki_company();
 $business = aoki_business();
-$staff    = array_slice( aoki_staff(), 0, 3 );
+$staff    = array_values( array_filter( aoki_staff(), function ( $s ) { return ! empty( $s['voice'] ); } ) );
 $works    = aoki_get_works( 3 );
 ?>
 
@@ -22,10 +22,10 @@ $works    = aoki_get_works( 3 );
 	<div class="hero__copy container">
 		<p class="hero__label">自動ドア・建具の青木工業</p>
 		<h1 class="hero__title">
-			<span class="hero__line"><span>確かな技術で</span><span>扉を開き、</span></span>
-			<span class="hero__line hero__line--accent"><span>皆様に</span><span>幸せな時間を</span></span>
+			<span class="hero__line"><span>毎日だれかが</span><span>通る扉を、</span></span>
+			<span class="hero__line hero__line--accent"><span>確かな技術で。</span></span>
 		</h1>
-		<p class="hero__sub">自動ドアの施工・保守・メンテナンス<span aria-hidden="true"> ／ </span><br class="sp-only">鋼製建具・金物工事・カーテンウォール施工</p>
+		<p class="hero__sub">さいたま市・川越市を拠点に、<br class="sp-only">自動ドアの施工・メンテナンスと、<br>ビルの鋼製建具・サッシの取り付けを行っています。</p>
 	</div>
 
 	<a class="hero__scroll" href="#about"><span>Scroll</span></a>
@@ -45,6 +45,12 @@ $works    = aoki_get_works( 3 );
 			<p class="about__catch reveal">確かな技術で扉を開き、<br>皆様に幸せな時間を</p>
 			<p class="reveal">私たちの使命は、扉や窓の空間づくりを通して、お客様に安心と満足を提供することです。確かな技術と実績を基に、高品質なサービスを提供し続けます。私たちは、正確で迅速かつ丁寧な施工を心がけ、24時間サポート体制を整えています。これにより、お客様に常に安心して頂けることを日々心がけています。</p>
 			<p class="reveal">そして、従業員が安心して長く働ける職場環境を作ることが私たちのもう一つの使命です。アットホームな企業風土を重視し、家族経営から発展した企業文化を大切にしています。</p>
+			<dl class="stats reveal" aria-label="数字で見る青木工業">
+				<div><dt>設立</dt><dd>1989<small>年</small></dd></div>
+				<div><dt>社員</dt><dd>12<small>名</small></dd></div>
+				<div><dt>年間休日</dt><dd>105<small>日</small></dd></div>
+				<div><dt>残業 月平均</dt><dd>10<small>時間</small></dd></div>
+			</dl>
 			<ul class="about__badges reveal">
 				<li><?php echo aoki_icon( 'clock' ); // phpcs:ignore ?>24時間サポート体制</li>
 				<li><?php echo aoki_icon( 'license' ); // phpcs:ignore ?>自動ドア施工 1級・2級</li>
@@ -103,10 +109,11 @@ $works    = aoki_get_works( 3 );
 	<div class="top-recruit__media" aria-hidden="true"><?php echo aoki_img( 'photo/meeting-1.webp', '' ); // phpcs:ignore ?></div>
 	<div class="top-recruit__inner container">
 		<?php aoki_heading( 'Recruit', '採用情報', 'h2', 'heading--light' ); ?>
-		<p class="top-recruit__catch reveal">あなたのペースで成長を<br>安心の環境で一緒に</p>
+		<p class="top-recruit__catch reveal">未経験から2ヶ月の研修で、<br>一人で現場を任されるまで。</p>
+		<p class="top-recruit__text reveal">自動ドア整備士・建具職人を募集しています。</p>
 		<div class="top-recruit__actions reveal">
-			<a class="btn btn--white" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>">採用情報を見る<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
-			<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'entry' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>採用エントリー</a>
+			<a class="btn btn--white" href="<?php echo esc_url( add_query_arg( 'type', 'visit', aoki_url( 'entry' ) ) ); ?>">まずは職場見学から<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
+			<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'recruit' ) . '#jobs' ); ?>">募集要項を見る</a>
 		</div>
 	</div>
 </section>
@@ -123,7 +130,7 @@ $works    = aoki_get_works( 3 );
 					<a class="staff-card" href="<?php echo esc_url( aoki_url( 'staff' ) . '#staff-' . $s['id'] ); ?>">
 						<figure class="staff-card__media"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真' ); // phpcs:ignore ?></figure>
 						<p class="staff-card__career"><?php echo esc_html( $s['career'] ); ?></p>
-						<p class="staff-card__catch"><?php echo esc_html( $s['catch'] ); ?></p>
+						<p class="staff-card__catch">「<?php echo esc_html( $s['voice'] ); ?>」</p>
 						<p class="staff-card__name"><?php echo esc_html( $s['name'] ); ?><span class="staff-card__more"><?php echo aoki_icon( 'arrow' ); // phpcs:ignore ?></span></p>
 					</a>
 				</li>

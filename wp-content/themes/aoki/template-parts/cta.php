@@ -27,11 +27,11 @@ $mode = $args['mode'] ?? 'both';
 		<?php if ( 'contact' !== $mode ) : ?>
 			<div class="cta__panel cta__panel--recruit reveal">
 				<p class="cta__en" aria-hidden="true">Recruit</p>
-				<h2 class="cta__title">あなたのペースで成長を<br>安心の環境で一緒に</h2>
+				<h2 class="cta__title">未経験から、一人で<br>現場を任される職人に。</h2>
 				<p class="cta__text">未経験でも2ヶ月の研修を経て独立可能。資格取得も会社がサポートします。</p>
 				<div class="cta__actions">
-					<a class="btn btn--white" href="<?php echo esc_url( aoki_url( 'entry' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>採用エントリー<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
-					<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'recruit' ) ); ?>">募集要項を見る</a>
+					<a class="btn btn--white" href="<?php echo esc_url( add_query_arg( 'type', 'visit', aoki_url( 'entry' ) ) ); ?>">まずは職場見学から<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
+					<a class="btn btn--ghost-white" href="<?php echo esc_url( aoki_url( 'recruit' ) . '#jobs' ); ?>">募集要項を見る</a>
 				</div>
 			</div>
 		<?php endif; ?>

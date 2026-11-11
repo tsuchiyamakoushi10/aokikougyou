@@ -39,6 +39,13 @@
 	}
 
 	function validateRow(row) {
+		var radios = row.querySelectorAll('input[type="radio"]');
+		if (radios.length) {
+			var none = !Array.prototype.some.call(radios, function (r) { return r.checked; });
+			var rmsg = row.hasAttribute('data-required') && none ? label(row) + 'を選択してください。' : '';
+			setError(row, rmsg);
+			return !rmsg;
+		}
 		var inputs = Array.prototype.slice.call(row.querySelectorAll('input:not([type="radio"]):not([type="hidden"]), select, textarea'));
 		if (!inputs.length) return true;
 		var required = inputs.some(function (i) { return i.required; });
@@ -152,6 +159,20 @@
 			if (btn) { btn.disabled = false; btn.firstChild.textContent = label; }
 		});
 	}
+
+	// 「まずは職場見学から」などのボタンから来た場合、選択肢を選んだ状態にする（静的サイト版用）
+	(function () {
+		var q = new URLSearchParams(location.search);
+		var pick = function (name, value) {
+			var group = form.querySelectorAll('input[type="radio"][name="' + name + '"]');
+			if (!group.length || Array.prototype.some.call(group, function (r) { return r.checked; })) return;
+			group.forEach(function (r) { if (r.value === value) r.checked = true; });
+		};
+		var jobs = { 'automatic-door': '自動ドアメンテナンス', fittings: '建具取付' };
+		var types = { talk: 'まずは話を聞きたい', visit: '職場見学をしたい', apply: '応募したい' };
+		if (types[q.get('type')]) pick('type', types[q.get('type')]);
+		if (jobs[q.get('job')]) { pick('job', jobs[q.get('job')]); pick('type', types.apply); }
+	})();
 
 	// 送信までの時間チェック用（ページを開いた時刻）
 	var ts = form.querySelector('[name="_ts"]');
