@@ -20,7 +20,8 @@ $jobs = aoki_jobs();
 	<div class="container container--narrow">
 		<p class="recruit-intro__lead reveal">青木工業は、社員12名の会社です。自動ドアと建具の仕事は、街の中で毎日だれかが使う物をつくり、守る仕事。2ヶ月の研修で一人立ちを目指し、不安があれば研修を1ヶ月延ばせます。</p>
 		<div class="recruit-intro__actions reveal">
-			<a class="btn btn--primary btn--lg" href="#jobs">募集要項を見る<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
+			<a class="btn btn--primary btn--lg" href="<?php echo esc_url( aoki_url( 'entry' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?>エントリーする<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
+			<a class="btn btn--outline btn--lg" href="#jobs">募集要項を見る</a>
 		</div>
 	</div>
 </section>

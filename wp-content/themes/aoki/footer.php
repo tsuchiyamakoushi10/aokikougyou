@@ -62,6 +62,10 @@ $c = aoki_company();
 	</div>
 </footer>
 
+<?php if ( ! is_page( array( 'entry', 'contact' ) ) ) : ?>
+	<a class="float-entry" href="<?php echo esc_url( aoki_url( 'entry' ) ); ?>"><?php echo aoki_icon( 'entry' ); // phpcs:ignore ?><span>採用エントリー</span></a>
+<?php endif; ?>
+
 <nav class="mobile-bar" aria-label="お問い合わせ">
 	<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo aoki_icon( 'tel' ); // phpcs:ignore ?><span>電話</span></a>
 	<a href="<?php echo esc_url( aoki_url( 'contact' ) ); ?>"><?php echo aoki_icon( 'mail' ); // phpcs:ignore ?><span>お問い合わせ</span></a>
