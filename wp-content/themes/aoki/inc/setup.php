@@ -22,7 +22,6 @@ add_action(
 add_action(
 	'wp_enqueue_scripts',
 	function () {
-		wp_enqueue_style( 'aoki-fonts', 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Montserrat:wght@500;600;700&display=swap', array(), null );
 		wp_enqueue_style( 'aoki-main', AOKI_URI . '/assets/css/main.css', array(), aoki_asset_ver( 'assets/css/main.css' ) );
 		wp_enqueue_script( 'aoki-main', AOKI_URI . '/assets/js/main.js', array(), aoki_asset_ver( 'assets/js/main.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 
@@ -41,6 +40,13 @@ add_action(
 );
 
 /**
+ * Google Fonts の URL。
+ */
+function aoki_fonts_url() {
+	return 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Montserrat:wght@500;600;700&display=swap';
+}
+
+/**
  * ファイル更新時刻をバージョンにしてキャッシュを確実に更新する。
  */
 function aoki_asset_ver( $rel ) {
@@ -53,6 +59,10 @@ add_action(
 	function () {
 		echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
 		echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+		// フォントは画面の表示を止めないように後から読み込む（読み込むまでは端末の標準フォントで表示）。
+		echo '<link rel="stylesheet" id="aoki-fonts" href="' . esc_url( aoki_fonts_url() ) . '" media="print">' . "\n";
+		echo "<script>(function(l){function on(){l.media='all'}if(l.sheet){on()}else{l.addEventListener('load',on)}})(document.getElementById('aoki-fonts'));</script>\n";
+		echo '<noscript><link rel="stylesheet" href="' . esc_url( aoki_fonts_url() ) . '"></noscript>' . "\n";
 		echo '<link rel="icon" href="' . esc_url( AOKI_URI . '/assets/img/logo/mark.svg' ) . '" type="image/svg+xml">' . "\n";
 		echo '<meta name="theme-color" content="#0b5089">' . "\n";
 		if ( is_front_page() ) {
@@ -66,6 +76,8 @@ add_action(
 );
 
 // Google アナリティクス（旧サイトと同じ測定ID）。ログイン中の管理者は計測しない。
+// 計測用の大きなスクリプトは、ページの表示が終わってから読み込む（表示速度のため）。
+// それまでの計測内容は dataLayer にためておき、読み込み後にまとめて送られる。
 add_action(
 	'wp_head',
 	function () {
@@ -74,7 +86,7 @@ add_action(
 			return;
 		}
 		printf(
-			"<script async src=\"https://www.googletagmanager.com/gtag/js?id=%1\$s\"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','%1\$s');</script>\n",
+			"<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','%1\$s');addEventListener('load',function(){setTimeout(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=%1\$s';document.head.appendChild(s)},0)});</script>\n",
 			esc_attr( $id )
 		);
 	},

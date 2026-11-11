@@ -5,6 +5,7 @@
 	var doc = document.documentElement;
 	var header = document.getElementById('site-header');
 	var mobileBar = document.querySelector('.mobile-bar');
+	var floatEntry = document.querySelector('.float-entry');
 
 	/* ヘッダー：スクロールで背景を付ける／モバイル下部バーを表示 */
 	var ticking = false;
@@ -12,6 +13,7 @@
 		var y = window.scrollY;
 		if (header) header.classList.toggle('is-scrolled', y > 40);
 		if (mobileBar) mobileBar.classList.toggle('is-visible', y > window.innerHeight * 0.6);
+		if (floatEntry) floatEntry.classList.toggle('is-visible', y > window.innerHeight * 0.6);
 		ticking = false;
 	}
 	window.addEventListener('scroll', function () {

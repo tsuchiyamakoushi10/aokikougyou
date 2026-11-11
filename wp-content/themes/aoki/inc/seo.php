@@ -27,6 +27,12 @@ function aoki_meta_description() {
 	if ( is_front_page() ) {
 		return $c['description'];
 	}
+	if ( is_tax( 'works_cat', 'automatic-door' ) ) {
+		return '青木工業の自動ドアの施工事例。商業施設・店舗・オフィスビルなどで行った自動ドアの取り付けとメンテナンスの実績をご紹介します。';
+	}
+	if ( is_tax( 'works_cat', 'fittings' ) ) {
+		return '青木工業の建具の施工事例。オフィスビルやマンションのエントランス・共用部で行った、自動ドアの建具やサッシの取り付け実績をご紹介します。';
+	}
 	if ( is_post_type_archive( 'works' ) || is_tax( 'works_cat' ) ) {
 		return '青木工業の施工事例。商業施設やオフィスビルの自動ドア、回転扉・建具の取り付け実績をご紹介します。';
 	}
@@ -70,6 +76,12 @@ add_filter(
 		}
 		if ( is_post_type_archive( 'works' ) ) {
 			return '施工事例｜自動ドア・建具の青木工業';
+		}
+		if ( is_tax( 'works_cat', 'automatic-door' ) ) {
+			return '自動ドアの施工事例｜青木工業';
+		}
+		if ( is_tax( 'works_cat', 'fittings' ) ) {
+			return '建具・サッシの施工事例｜青木工業';
 		}
 		if ( is_page() ) {
 			$slug   = get_post_field( 'post_name', get_queried_object_id() );
@@ -115,27 +127,73 @@ add_action(
 		echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 
 		if ( is_front_page() ) {
-			$ld = array(
-				'@context'  => 'https://schema.org',
-				'@type'     => 'LocalBusiness',
-				'name'      => $c['name'],
-				'url'       => home_url( '/' ),
-				'logo'      => aoki_asset( 'logo/logo-full.png' ),
-				'image'     => aoki_asset( 'ogp.jpg' ),
-				'telephone' => $c['tel'],
-				'faxNumber' => $c['fax'],
-				'address'   => array(
-					'@type'           => 'PostalAddress',
-					'postalCode'      => $c['zip'],
-					'addressRegion'   => '埼玉県',
-					'addressLocality' => 'さいたま市西区',
-					'streetAddress'   => '佐知川302',
-					'addressCountry'  => 'JP',
+			// 会社（地域の事業者）と、サイト名（WebSite）。どちらもサイト上に書いてある情報だけを使う。
+			$address = array(
+				'@type'           => 'PostalAddress',
+				'postalCode'      => $c['zip'],
+				'addressRegion'   => '埼玉県',
+				'addressLocality' => 'さいたま市西区',
+				'streetAddress'   => '佐知川302',
+				'addressCountry'  => 'JP',
+			);
+			$org = array(
+				'@type'             => 'HomeAndConstructionBusiness',
+				'@id'               => home_url( '/#organization' ),
+				'name'              => $c['name'],
+				'alternateName'     => array( '青木工業', $c['name_en'] ),
+				'url'               => home_url( '/' ),
+				'logo'              => aoki_asset( 'logo/logo-full.png' ),
+				'image'             => aoki_asset( 'ogp.jpg' ),
+				'description'       => $c['description'],
+				'telephone'         => $c['tel'],
+				'faxNumber'         => $c['fax'],
+				'address'           => $address,
+				'foundingDate'      => preg_match( '/^(\d{4})年/', $c['founded'], $m ) ? $m[1] : null,
+				'numberOfEmployees' => preg_match( '/^(\d+)名/', $c['employees'], $m ) ? array( '@type' => 'QuantitativeValue', 'value' => (int) $m[1] ) : null,
+				'department'        => array(
+					'@type'     => 'HomeAndConstructionBusiness',
+					'name'      => $c['name'] . ' ' . $c['branch']['name'],
+					'telephone' => $c['branch']['tel'],
+					'faxNumber' => $c['branch']['fax'],
+					'address'   => array(
+						'@type'           => 'PostalAddress',
+						'postalCode'      => $c['branch']['zip'],
+						'addressRegion'   => '埼玉県',
+						'addressLocality' => '川越市',
+						'streetAddress'   => '久下戸3489-3',
+						'addressCountry'  => 'JP',
+					),
 				),
-				'sameAs'    => array( $c['instagram'] ),
+				'sameAs'            => array( $c['instagram'] ),
+			);
+			$ld  = array(
+				'@context' => 'https://schema.org',
+				'@graph'   => array(
+					array_filter( $org ),
+					array(
+						'@type'         => 'WebSite',
+						'@id'           => home_url( '/#website' ),
+						'name'          => $c['name'],
+						'alternateName' => '青木工業',
+						'url'           => home_url( '/' ),
+						'inLanguage'    => 'ja',
+						'publisher'     => array( '@id' => home_url( '/#organization' ) ),
+					),
+				),
 			);
 			echo '<script type="application/ld+json">' . wp_json_encode( $ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 		}
 	},
 	5
+);
+
+// 見つからないページ（404）は検索結果に出さない。
+add_filter(
+	'wp_robots',
+	function ( $robots ) {
+		if ( is_404() ) {
+			$robots['noindex'] = true;
+		}
+		return $robots;
+	}
 );

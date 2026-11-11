@@ -48,11 +48,13 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 		<h2 class="form-result__title">送信が完了しました</h2>
 		<?php if ( 'entry' === $form_id ) : ?>
 			<p>ご応募ありがとうございます。<br>採用担当よりお電話にてご連絡いたします。</p>
-			<p class="form-result__note">メールアドレスをご入力いただいた方には、確認メールをお送りしました。<br>履歴書は面接の日にお持ちください。</p>
+			<p class="form-result__note">履歴書は面接の日にお持ちください。</p>
 		<?php else : ?>
-			<p>お問い合わせいただき、誠にありがとうございます。<br>ご入力いただいたメールアドレスに確認メールをお送りしました。<br>内容を確認のうえ、担当者より折り返しご連絡いたします。</p>
+			<p>お問い合わせいただき、誠にありがとうございます。<br>内容を確認のうえ、担当者より折り返しご連絡いたします。</p>
 		<?php endif; ?>
-		<p class="form-result__note">確認メールが届かない場合は、迷惑メールフォルダをご確認いただくか、お電話（<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>）にてお問い合わせください。</p>
+		<p class="form-result__note">お急ぎの場合は、お電話（<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>）にてお問い合わせください。</p>
+		<?php // Google アナリティクス：送信完了を「問い合わせ・応募」として数える（GA4 の推奨イベント generate_lead）。 ?>
+		<script>if(window.gtag){gtag('event','generate_lead',{form_name:'<?php echo esc_js( $form_id ); ?>'});}</script>
 		<div class="form-result__actions">
 			<a class="btn btn--primary" href="<?php echo esc_url( aoki_url() ); ?>">トップページへ戻る</a>
 			<?php if ( 'entry' === $form_id ) : ?>
@@ -168,7 +170,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 								'zip'   => 'postal-code',
 							)[ $f['type'] ] ?? 'off';
 							$ph   = $f['placeholder'] ?? array(
-								'email' => 'example@aokikogyo.co.jp',
+								'email' => 'example@example.com',
 								'tel'   => '048-623-5130',
 								'zip'   => '331-0064',
 							)[ $f['type'] ] ?? '';
@@ -185,6 +187,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 			</div>
 		<?php endforeach; ?>
 
+		<!--aoki:turnstile-->
 		<div class="form__submit">
 			<button type="submit" class="btn btn--primary btn--lg">入力内容を送信する<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></button>
 			<p class="form__privacy">ご入力いただいた個人情報は、お問い合わせへの回答・ご連絡のためにのみ使用し、適切に管理いたします。</p>

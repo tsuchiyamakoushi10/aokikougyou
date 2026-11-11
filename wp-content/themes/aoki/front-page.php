@@ -13,7 +13,7 @@ $works    = aoki_get_works( 3 );
 <section class="hero" id="hero" aria-label="メインビジュアル">
 	<div class="hero__scene" aria-hidden="true">
 		<picture class="hero__photo">
-			<img src="<?php echo esc_url( aoki_asset( 'photo/hero-team.webp' ) ); ?>" alt="" width="1920" height="1440" fetchpriority="high">
+			<?php echo aoki_img( 'photo/hero-team.webp', '', array( 'loading' => 'eager', 'decoding' => false, 'fetchpriority' => 'high' ) ); // phpcs:ignore ?>
 		</picture>
 		<div class="hero__light"></div>
 		<div class="hero__shade"></div>
@@ -126,7 +126,7 @@ $works    = aoki_get_works( 3 );
 			<?php foreach ( $staff as $s ) : ?>
 				<li class="reveal">
 					<a class="staff-card" href="<?php echo esc_url( aoki_url( 'staff' ) . '#staff-' . $s['id'] ); ?>">
-						<figure class="staff-card__media"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真' ); // phpcs:ignore ?></figure>
+						<figure class="staff-card__media"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真', array( 'sizes' => '(min-width: 640px) 33vw, 100vw' ) ); // phpcs:ignore ?></figure>
 						<p class="staff-card__career"><?php echo esc_html( $s['career'] ); ?></p>
 						<p class="staff-card__catch">「<?php echo esc_html( $s['voice'] ); ?>」</p>
 						<p class="staff-card__name"><?php echo esc_html( $s['name'] ); ?><span class="staff-card__more"><?php echo aoki_icon( 'arrow' ); // phpcs:ignore ?></span></p>

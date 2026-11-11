@@ -19,7 +19,39 @@ function aoki_asset( $rel ) {
 }
 
 /**
- * テーマ同梱画像の <img>。width/height を付けてレイアウトのずれを防ぐ。
+ * テーマ同梱画像の URL（更新時刻つき。画像を差し替えたらブラウザのキャッシュも新しくなる）。
+ */
+function aoki_img_url( $rel ) {
+	$path = AOKI_DIR . '/assets/img/' . $rel;
+	return aoki_asset( $rel ) . ( file_exists( $path ) ? '?v=' . filemtime( $path ) : '' );
+}
+
+/**
+ * 縮小版（bin/make-image-sizes.py が作る「名前-480w.webp」など）があれば srcset を返す。
+ */
+function aoki_img_srcset( $rel ) {
+	$path = AOKI_DIR . '/assets/img/' . $rel;
+	if ( ! file_exists( $path ) || ! preg_match( '/\.webp$/', $rel ) ) {
+		return '';
+	}
+	$size = wp_getimagesize( $path );
+	$list = array();
+	foreach ( array( 480, 1024 ) as $w ) {
+		$v = substr( $rel, 0, -5 ) . '-' . $w . 'w.webp';
+		if ( file_exists( AOKI_DIR . '/assets/img/' . $v ) ) {
+			$list[] = aoki_img_url( $v ) . ' ' . $w . 'w';
+		}
+	}
+	if ( ! $list || ! $size ) {
+		return '';
+	}
+	$list[] = aoki_img_url( $rel ) . ' ' . $size[0] . 'w';
+	return implode( ', ', $list );
+}
+
+/**
+ * テーマ同梱画像の <img>。width/height を付けてレイアウトのずれを防ぎ、
+ * 画面幅に合った大きさの画像を選べるよう srcset を付ける（sizes は表示幅の目安。既定は画面幅いっぱい）。
  */
 function aoki_img( $rel, $alt = '', $attrs = array() ) {
 	$path  = AOKI_DIR . '/assets/img/' . $rel;
@@ -34,7 +66,14 @@ function aoki_img( $rel, $alt = '', $attrs = array() ) {
 		$attrs['width']  = $size[0];
 		$attrs['height'] = $size[1];
 	}
-	$html = '<img src="' . esc_url( aoki_asset( $rel ) ) . '" alt="' . esc_attr( $alt ) . '"';
+	$srcset = aoki_img_srcset( $rel );
+	if ( $srcset ) {
+		$attrs['srcset'] = $srcset;
+		$attrs['sizes']  = $attrs['sizes'] ?? '100vw';
+	} else {
+		unset( $attrs['sizes'] );
+	}
+	$html = '<img src="' . esc_url( aoki_img_url( $rel ) ) . '" alt="' . esc_attr( $alt ) . '"';
 	foreach ( $attrs as $k => $v ) {
 		if ( false === $v ) {
 			continue;

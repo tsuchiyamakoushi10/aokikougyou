@@ -66,18 +66,43 @@ docker compose up -d
 Vercel では WordPress（PHP / データベース）が動かないため、ローカルの WordPress を静的 HTML に書き出した `dist/` と、
 フォーム送信用のサーバー関数 `api/form.js` を公開しています。
 
-### 公開前に Vercel で設定する環境変数（Settings > Environment Variables）
+### フォームの送信先
+
+フォームの見た目・入力チェック・ロボット対策はサイト側で行い、送信内容は次のどちらか（または両方）に届けます。
+
+**1. Google フォーム（標準）**
+
+1. Google フォームを作る（お問い合わせ用・採用エントリー用の2つ）。
+   - 質問名はサイトの項目名と同じにする
+     - お問い合わせ：お問い合わせの種類／お名前／フリガナ／会社名／メールアドレス／電話番号／メッセージ
+     - 採用エントリー：応募の種類／応募職種／お名前／フリガナ／電話番号／メールアドレス／年齢／連絡してよい時間帯／今のお仕事・経験／聞きたいこと
+   - 質問の種類は「記述式」（メッセージなど長いものは「段落」）。必須にはしない（チェックはサイト側で行う）
+   - 設定：ログイン不要・メールアドレスを収集しない
+   - 回答タブ →「新しい回答についてのメール通知を受け取る」をオンにすると、送信のたびにメールが届く
+2. 公開リンク（`https://docs.google.com/forms/d/e/…/viewform`）で対応表を作る。
+   ```bash
+   python3 bin/google-form-map.py contact <お問い合わせ用のURL>
+   python3 bin/google-form-map.py entry   <採用エントリー用のURL>
+   ```
+   `api/google-forms.json` ができるので、コミットして公開する。
+
+※ Google フォームだけの場合、お客様への自動返信メールは送られません。
+
+**2. メール（任意）**：Vercel の環境変数（Settings > Environment Variables）に設定すると、会社宛てメールと自動返信も送ります。
 
 | 変数 | 内容 | 例 |
 |---|---|---|
 | `SMTP_HOST` | 送信に使うメールサーバー | `smtp.example.com` |
 | `SMTP_PORT` | ポート（465 なら SSL） | `587` |
 | `SMTP_USER` / `SMTP_PASS` | メールサーバーのユーザー・パスワード | |
-| `MAIL_FROM` | 送信元アドレス | `no-reply@aokikogyo.co.jp` |
-| `MAIL_TO_CONTACT` | お問い合わせの受信先 | `info@aokikogyo.co.jp` |
+| `MAIL_FROM` | 送信元アドレス | `no-reply@aokikogyo-sk.com` |
+| `MAIL_TO_CONTACT` | お問い合わせの受信先 | |
 | `MAIL_TO_ENTRY` | 採用エントリーの受信先（省略時は上と同じ） | |
 
-未設定のままだと、フォーム送信時に「送信処理でエラーが発生しました（お電話ください）」と表示されます。
+どちらも未設定のままだと、送信時に「送信処理でエラーが発生しました（お電話ください）」と表示されます。
+
+**ロボット対策（任意）**：Cloudflare Turnstile を使う場合は、Vercel に `TURNSTILE_SECRET_KEY` を設定し、
+`TURNSTILE_SITE_KEY=<サイトキー> python3 bin/export-static.py` で書き出す。
 
 ### 内容を更新するとき
 

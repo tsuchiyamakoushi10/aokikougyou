@@ -539,6 +539,37 @@ html.is-drawer-open .header-insta { display: none; }
 @media (min-width: 768px) {
 	.mobile-bar { display: none; }
 }
+
+/* PC：右下の「採用エントリー」ボタン（スマホは下部バーにあるので出さない） */
+.float-entry { display: none; }
+@media (min-width: 768px) {
+	.float-entry {
+		position: fixed;
+		right: max(24px, env(safe-area-inset-right, 0px));
+		bottom: max(24px, env(safe-area-inset-bottom, 0px));
+		z-index: 80;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 16px 28px;
+		border-radius: 999px;
+		background: var(--blue);
+		color: #fff;
+		font-size: 16px;
+		font-weight: 700;
+		letter-spacing: .04em;
+		text-decoration: none;
+		box-shadow: 0 12px 28px -10px rgba(7, 47, 82, .55);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(16px);
+		transition: opacity .35s var(--ease), transform .35s var(--ease), visibility .35s, background .3s var(--ease);
+	}
+	.float-entry .icon { width: 22px; height: 22px; }
+	.float-entry.is-visible { opacity: 1; visibility: visible; transform: none; }
+	.float-entry:hover { background: var(--navy); color: #fff; }
+	html.is-drawer-open .float-entry { display: none; }
+}
 @media (max-width: 767px) {
 	.site-footer { padding-bottom: 72px; }
 }
@@ -1497,6 +1528,7 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
 .radio input:checked + span { border-color: var(--blue); background: rgba(25, 118, 210, .06); color: var(--navy); font-weight: 700; }
 .radio input:checked + span::before { border: 5px solid var(--blue); }
 .radio input:focus-visible + span { outline: 3px solid var(--warm); outline-offset: 2px; }
+.form__turnstile { display: flex; justify-content: center; margin-top: 32px; }
 .form__submit { margin-top: 40px; text-align: center; }
 .form__submit .btn { min-width: min(100%, 360px); }
 .form__submit .btn[disabled] { opacity: .6; cursor: progress; }
