@@ -8,7 +8,7 @@ aoki_page_hero(
 	array(
 		'en'     => 'Recruit',
 		'title'  => '採用情報',
-		'lead'   => 'あなたのペースで成長を　安心の環境で一緒に',
+		'lead'   => '未経験から、一人で現場を任される職人に。',
 		'image'  => 'photo/team.webp',
 		'crumbs' => array( array( '採用情報', '' ) ),
 	)
@@ -16,16 +16,57 @@ aoki_page_hero(
 $jobs = aoki_jobs();
 ?>
 
+<section class="section section--first recruit-intro">
+	<div class="container container--narrow">
+		<p class="recruit-intro__lead reveal">青木工業は、社員12名の会社です。自動ドアと建具の仕事は、街の中で毎日だれかが使う物をつくり、守る仕事。2ヶ月の研修で一人立ちを目指し、不安があれば研修を1ヶ月延ばせます。</p>
+		<div class="recruit-intro__actions reveal">
+			<a class="btn btn--primary btn--lg" href="<?php echo esc_url( add_query_arg( 'type', 'visit', aoki_url( 'entry' ) ) ); ?>">まずは職場見学から<?php echo aoki_icon( 'arrow', 'icon icon--end' ); // phpcs:ignore ?></a>
+			<a class="btn btn--outline btn--lg" href="#jobs">募集要項を見る</a>
+		</div>
+	</div>
+</section>
+
 <nav class="page-toc container" aria-label="ページ内リンク">
 	<ul>
+		<li><a href="#points">働く5つの理由</a></li>
+		<li><a href="#steps">一人立ちまでの流れ</a></li>
 		<li><a href="#values">大切にしていること</a></li>
-		<li><a href="#points">おすすめポイント</a></li>
 		<li><a href="#benefits">福利厚生</a></li>
 		<li><a href="#jobs">募集要項</a></li>
 	</ul>
 </nav>
 
-<section class="section" id="values">
+<section class="section section--soft" id="points">
+	<div class="container">
+		<?php aoki_heading( 'Reasons', '青木工業で働く5つの理由', 'h2', 'heading--center' ); ?>
+		<div class="points">
+			<?php foreach ( aoki_recruit_points() as $i => $p ) : ?>
+				<article class="point reveal">
+					<p class="point__num" aria-hidden="true">Reason<span>0<?php echo (int) $i + 1; ?></span></p>
+					<h3 class="point__title"><?php echo esc_html( $p['title'] ); ?></h3>
+					<p><?php echo esc_html( $p['text'] ); ?></p>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="section" id="steps">
+	<div class="container">
+		<?php aoki_heading( 'Steps', '一人立ちまでの流れ', 'h2', 'heading--center' ); ?>
+		<ol class="steps">
+			<?php foreach ( aoki_recruit_steps() as $i => $st ) : ?>
+				<li class="step reveal">
+					<p class="step__when"><span aria-hidden="true">Step 0<?php echo (int) $i + 1; ?></span><?php echo esc_html( $st['when'] ); ?></p>
+					<h3 class="step__title"><?php echo esc_html( $st['title'] ); ?></h3>
+					<p><?php echo esc_html( $st['text'] ); ?></p>
+				</li>
+			<?php endforeach; ?>
+		</ol>
+	</div>
+</section>
+
+<section class="section section--soft" id="values">
 	<div class="container">
 		<?php aoki_heading( 'Our Values', '私たちが採用で大切にしていること', 'h2', 'heading--center' ); ?>
 		<ol class="values">
@@ -44,21 +85,6 @@ $jobs = aoki_jobs();
 	<div class="recruit-message__media" aria-hidden="true"><?php echo aoki_img( 'photo/meeting-3.webp', '' ); // phpcs:ignore ?></div>
 	<div class="recruit-message__inner container">
 		<p class="recruit-message__text reveal">当社で<span>「あなたのペースで成長を」</span><br>私たちと<span>「安心の環境で一緒に」</span></p>
-	</div>
-</section>
-
-<section class="section section--soft" id="points">
-	<div class="container">
-		<?php aoki_heading( 'Points', '青木工業のおすすめポイント', 'h2', 'heading--center' ); ?>
-		<div class="points">
-			<?php foreach ( aoki_recruit_points() as $i => $p ) : ?>
-				<article class="point reveal">
-					<p class="point__num" aria-hidden="true">Point<span>0<?php echo (int) $i + 1; ?></span></p>
-					<h3 class="point__title"><?php echo esc_html( $p['title'] ); ?></h3>
-					<p><?php echo esc_html( $p['text'] ); ?></p>
-				</article>
-			<?php endforeach; ?>
-		</div>
 	</div>
 </section>
 
@@ -96,23 +122,17 @@ $jobs = aoki_jobs();
 							<div>
 								<dt><?php echo esc_html( $label ); ?></dt>
 								<dd>
-									<?php if ( '業務内容' === $label ) : ?>
+									<?php if ( '仕事内容' === $label ) : ?>
 										<dl class="job-duties">
 											<?php foreach ( $value as $t => $d ) : ?>
 												<dt><?php echo esc_html( $t ); ?></dt><dd><?php echo esc_html( $d ); ?></dd>
 											<?php endforeach; ?>
 										</dl>
 									<?php elseif ( '給与' === $label ) : ?>
-										<p class="job-salary"><?php echo esc_html( $value['list'][0] ); ?></p>
-										<ul class="job-list">
-											<?php foreach ( array_slice( $value['list'], 1 ) as $li ) : ?>
-												<li><?php echo esc_html( $li ); ?></li>
-											<?php endforeach; ?>
-										</ul>
-										<?php $lines = aoki_lines( $value['text'] ); ?>
-										<p><strong><?php echo esc_html( $lines[0] ); ?></strong><br><span class="job-note"><?php echo esc_html( $lines[1] ); ?></span></p>
-									<?php elseif ( in_array( $label, array( '休暇', '福利厚生' ), true ) ) : ?>
-										<ul class="job-list job-list--cols">
+										<p class="job-salary"><?php echo esc_html( $value['main'] ); ?></p>
+										<p class="job-note"><?php echo esc_html( $value['note'] ); ?></p>
+									<?php elseif ( in_array( $label, array( '手当', '休日', '福利厚生' ), true ) ) : ?>
+										<ul class="job-list<?php echo '手当' === $label ? '' : ' job-list--cols'; ?>">
 											<?php foreach ( aoki_lines( $value ) as $li ) : ?>
 												<li><?php echo esc_html( $li ); ?></li>
 											<?php endforeach; ?>

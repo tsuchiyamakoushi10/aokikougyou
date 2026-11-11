@@ -24,7 +24,8 @@ aoki_page_hero(
 					<p class="contact-tel__note">FAX：<?php echo esc_html( $c['fax'] ); ?>　／　24時間サポート体制を整えています。</p>
 				</div>
 			</div>
-			<p class="form-intro">フォームからのお問い合わせは、下記に必要事項をご入力のうえ送信してください。<br class="pc-only">内容を確認のうえ、担当者よりご連絡いたします。</p>
+			<p class="form-intro">自動ドアの不具合・点検、建具・サッシ工事のご相談はこちらから。<br class="pc-only">お急ぎの場合はお電話（<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>）でどうぞ。</p>
+			<p class="form-intro form-intro--note">営業のご連絡はお断りしています。</p>
 		<?php endif; ?>
 		<?php aoki_render_form( 'contact' ); ?>
 	</div>

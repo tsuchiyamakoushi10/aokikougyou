@@ -14,11 +14,25 @@ $sent    = isset( $_GET['sent'] ); // phpcs:ignore WordPress.Security.NonceVerif
 $c       = aoki_company();
 
 // 募集要項の「エントリーする」ボタンから来た場合は職種を選択済みにする。
-if ( 'entry' === $form_id && empty( $values ) && isset( $_GET['job'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-	$jobs = aoki_jobs();
-	$job  = sanitize_key( $_GET['job'] ); // phpcs:ignore WordPress.Security.NonceVerification
-	if ( isset( $jobs[ $job ] ) ) {
-		$values['job'] = $jobs[ $job ]['title'];
+// 「まずは職場見学から」ボタンから来た場合は応募の種類も選択済みにする。
+if ( 'entry' === $form_id && empty( $state['values'] ) ) {
+	$job_map  = array(
+		'automatic-door' => '自動ドアメンテナンス',
+		'fittings'       => '建具取付',
+	);
+	$type_map = array(
+		'talk'  => 'まずは話を聞きたい',
+		'visit' => '職場見学をしたい',
+		'apply' => '応募したい',
+	);
+	$job  = isset( $_GET['job'] ) ? sanitize_key( $_GET['job'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+	$type = isset( $_GET['type'] ) ? sanitize_key( $_GET['type'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+	if ( isset( $job_map[ $job ] ) ) {
+		$values['job']  = $job_map[ $job ];
+		$values['type'] = $type_map['apply'];
+	}
+	if ( isset( $type_map[ $type ] ) ) {
+		$values['type'] = $type_map[ $type ];
 	}
 }
 
@@ -34,7 +48,12 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 	<div class="form-result form-result--success" role="status">
 		<div class="form-result__icon"><?php echo aoki_mark_svg( 'form-result__mark' ); // phpcs:ignore ?></div>
 		<h2 class="form-result__title">送信が完了しました</h2>
-		<p><?php echo 'entry' === $form_id ? '採用エントリーをいただき' : 'お問い合わせいただき'; ?>、誠にありがとうございます。<br>ご入力いただいたメールアドレスに確認メールをお送りしました。<br>内容を確認のうえ、担当者より折り返しご連絡いたします。</p>
+		<?php if ( 'entry' === $form_id ) : ?>
+			<p>ご応募ありがとうございます。<br>採用担当よりお電話にてご連絡いたします。</p>
+			<p class="form-result__note">メールアドレスをご入力いただいた方には、確認メールをお送りしました。<br>履歴書は面接の日にお持ちください。</p>
+		<?php else : ?>
+			<p>お問い合わせいただき、誠にありがとうございます。<br>ご入力いただいたメールアドレスに確認メールをお送りしました。<br>内容を確認のうえ、担当者より折り返しご連絡いたします。</p>
+		<?php endif; ?>
 		<p class="form-result__note">確認メールが届かない場合は、迷惑メールフォルダをご確認いただくか、お電話（<a href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo esc_html( $c['tel'] ); ?></a>）にてお問い合わせください。</p>
 		<div class="form-result__actions">
 			<a class="btn btn--primary" href="<?php echo esc_url( aoki_url() ); ?>">トップページへ戻る</a>
@@ -88,7 +107,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 			}
 			$aria = ( $desc ? ' aria-describedby="' . esc_attr( implode( ' ', $desc ) ) . '"' : '' ) . ( $err ? ' aria-invalid="true"' : '' ) . ( $req ? ' required aria-required="true"' : '' );
 			?>
-			<div class="form__row<?php echo $err ? ' has-error' : ''; ?>" data-field="<?php echo esc_attr( $key ); ?>">
+			<div class="form__row<?php echo $err ? ' has-error' : ''; ?>" data-field="<?php echo esc_attr( $key ); ?>"<?php echo $req ? ' data-required' : ''; ?>>
 				<<?php echo $group ? 'p' : 'label'; ?> class="form__label"<?php echo $group ? ' id="' . esc_attr( $id ) . '-label"' : ' for="' . esc_attr( $id ) . '"'; ?>>
 					<?php echo esc_html( $f['label'] ); ?>
 					<?php echo $req ? '<span class="req">必須</span>' : '<span class="opt">任意</span>'; ?>
@@ -136,7 +155,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 							break;
 						case 'textarea':
 							?>
-							<textarea id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $key ); ?>" rows="8" maxlength="3000" placeholder="<?php echo esc_attr( $f['placeholder'] ?? '' ); ?>"<?php echo $aria; // phpcs:ignore ?>><?php echo esc_textarea( $val( $key ) ); ?></textarea>
+							<textarea id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $key ); ?>" rows="<?php echo (int) ( $f['rows'] ?? 8 ); ?>" maxlength="3000" placeholder="<?php echo esc_attr( $f['placeholder'] ?? '' ); ?>"<?php echo $aria; // phpcs:ignore ?>><?php echo esc_textarea( $val( $key ) ); ?></textarea>
 							<?php
 							break;
 						default:
@@ -150,7 +169,7 @@ $val = function ( $key, $sub = null ) use ( $values ) {
 								'tel'   => 'tel',
 								'zip'   => 'postal-code',
 							)[ $f['type'] ] ?? 'off';
-							$ph   = array(
+							$ph   = $f['placeholder'] ?? array(
 								'email' => 'example@aokikogyo.co.jp',
 								'tel'   => '048-623-5130',
 								'zip'   => '331-0064',

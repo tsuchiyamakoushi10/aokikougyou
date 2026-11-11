@@ -22,6 +22,7 @@ function aoki_forms() {
 			'title'   => 'お問い合わせ',
 			'subject' => '【青木工業】お問い合わせがありました',
 			'fields'  => array(
+				'type'          => array( 'label' => 'お問い合わせの種類', 'type' => 'radio', 'options' => array( '自動ドアの修理・点検', '自動ドアの新設・交換', '建具・サッシ工事', '採用について', 'その他' ) ),
 				'name'          => array( 'label' => 'お名前', 'type' => 'name', 'required' => true ),
 				'kana'          => array( 'label' => 'フリガナ', 'type' => 'kana' ),
 				'company'       => array( 'label' => '会社名', 'type' => 'text', 'autocomplete' => 'organization' ),
@@ -35,15 +36,16 @@ function aoki_forms() {
 			'title'   => '採用エントリー',
 			'subject' => '【青木工業】採用エントリーがありました',
 			'fields'  => array(
-				'job'           => array( 'label' => '希望職種', 'type' => 'radio', 'options' => array( '自動ドア（常勤）', '建具（常勤）', '未定・相談したい' ) ),
-				'name'          => array( 'label' => 'お名前', 'type' => 'name', 'required' => true ),
-				'kana'          => array( 'label' => 'フリガナ', 'type' => 'kana' ),
-				'email'         => array( 'label' => 'メールアドレス', 'type' => 'email', 'required' => true ),
-				'email_confirm' => array( 'label' => 'メールアドレス（確認用）', 'type' => 'email', 'required' => true, 'confirm' => 'email', 'note' => '確認のためもう一度ご入力ください。' ),
-				'zip'           => array( 'label' => '郵便番号', 'type' => 'zip', 'note' => '入力すると住所が自動で入ります。' ),
-				'address'       => array( 'label' => 'ご住所', 'type' => 'address' ),
-				'tel'           => array( 'label' => '電話番号', 'type' => 'tel', 'required' => true ),
-				'message'       => array( 'label' => 'メッセージ', 'type' => 'textarea', 'required' => true, 'placeholder' => 'ご経歴や希望の勤務開始時期、ご質問などをご記入ください。' ),
+				'type'     => array( 'label' => '応募の種類', 'type' => 'radio', 'required' => true, 'options' => array( 'まずは話を聞きたい', '職場見学をしたい', '応募したい' ) ),
+				'job'      => array( 'label' => '応募職種', 'type' => 'radio', 'required' => true, 'options' => array( '自動ドアメンテナンス', '建具取付', 'まだ決めていない' ) ),
+				'name'     => array( 'label' => 'お名前', 'type' => 'name', 'required' => true ),
+				'kana'     => array( 'label' => 'フリガナ', 'type' => 'kana', 'required' => true ),
+				'tel'      => array( 'label' => '電話番号', 'type' => 'tel', 'required' => true ),
+				'email'    => array( 'label' => 'メールアドレス', 'type' => 'email', 'note' => 'お電話だけでも受け付けます。' ),
+				'age'      => array( 'label' => '年齢', 'type' => 'text', 'placeholder' => '例：35歳' ),
+				'time'     => array( 'label' => '連絡してよい時間帯', 'type' => 'text', 'placeholder' => '例：平日の18時以降' ),
+				'career'   => array( 'label' => '今のお仕事・経験', 'type' => 'textarea', 'rows' => 4 ),
+				'question' => array( 'label' => '聞きたいこと', 'type' => 'textarea', 'rows' => 4 ),
 			),
 		),
 	);
@@ -136,9 +138,9 @@ function aoki_handle_form() {
 	}
 
 	$body   = aoki_form_mail_body( $form['fields'], $values );
-	$reply  = $values['email'];
+	$reply  = $values['email'] ?? '';
 	$name   = $values['name']['sei'] . ' ' . $values['name']['mei'];
-	$header = array( 'Reply-To: ' . aoki_mail_encode_name( $name ) . ' <' . $reply . '>' );
+	$header = $reply ? array( 'Reply-To: ' . aoki_mail_encode_name( $name ) . ' <' . $reply . '>' ) : array();
 
 	$admin_body = $form['title'] . "フォームから送信がありました。\n\n" . $body . "\n--\n送信日時：" . wp_date( 'Y年n月j日 H:i' ) . "\n送信元ページ：" . $back . "\n";
 	$sent       = wp_mail( $to, $form['subject'], $admin_body, $header );
@@ -157,7 +159,11 @@ function aoki_handle_form() {
 		exit;
 	}
 
-	// 自動返信。
+	// 自動返信（メールアドレスの入力があった場合のみ）。
+	if ( ! $reply ) {
+		wp_safe_redirect( add_query_arg( 'sent', '1', $back ) . '#form' );
+		exit;
+	}
 	$c         = aoki_company();
 	$auto_body = $name . " 様\n\nこの度は青木工業株式会社へ" . ( 'entry' === $form_id ? '採用エントリーをいただき' : 'お問い合わせいただき' ) . "、誠にありがとうございます。\n以下の内容で受け付けいたしました。担当者より折り返しご連絡いたしますので、今しばらくお待ちください。\n\n" . $body . "\n――――――――――――――――――\n" . $c['name'] . "\n〒" . $c['zip'] . ' ' . $c['address'] . "\nTEL：" . $c['tel'] . "\n" . home_url( '/' ) . "\n――――――――――――――――――\n※本メールは送信専用です。\n";
 	wp_mail( $reply, '【青木工業株式会社】' . $form['title'] . 'を受け付けました', $auto_body );
@@ -210,7 +216,7 @@ function aoki_form_validate( $fields, $v ) {
 		$val   = $v[ $key ];
 		$empty = is_array( $val ) ? ( 'name' === $f['type'] ? ( '' === $val['sei'] || '' === $val['mei'] ) : '' === implode( '', $val ) ) : '' === $val;
 		if ( ! empty( $f['required'] ) && $empty ) {
-			$e[ $key ] = $f['label'] . 'を入力してください。';
+			$e[ $key ] = $f['label'] . ( 'radio' === $f['type'] ? 'を選択してください。' : 'を入力してください。' );
 			continue;
 		}
 		if ( $empty ) {

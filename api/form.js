@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer');
 const COMPANY = {
   name: '青木工業株式会社',
   zip: '331-0064',
-  address: '埼玉県さいたま市西区大字佐知川302',
+  address: '埼玉県さいたま市西区佐知川302',
   tel: '048-623-5130',
   url: 'https://www.aokikogyo.co.jp/',
 };
@@ -25,6 +25,7 @@ const FORMS = {
     title: 'お問い合わせ',
     subject: '【青木工業】お問い合わせがありました',
     fields: {
+      type: { label: 'お問い合わせの種類', type: 'radio', options: ['自動ドアの修理・点検', '自動ドアの新設・交換', '建具・サッシ工事', '採用について', 'その他'] },
       name: { label: 'お名前', type: 'name', required: true },
       kana: { label: 'フリガナ', type: 'kana' },
       company: { label: '会社名', type: 'text' },
@@ -38,15 +39,16 @@ const FORMS = {
     title: '採用エントリー',
     subject: '【青木工業】採用エントリーがありました',
     fields: {
-      job: { label: '希望職種', type: 'radio', options: ['自動ドア（常勤）', '建具（常勤）', '未定・相談したい'] },
+      type: { label: '応募の種類', type: 'radio', required: true, options: ['まずは話を聞きたい', '職場見学をしたい', '応募したい'] },
+      job: { label: '応募職種', type: 'radio', required: true, options: ['自動ドアメンテナンス', '建具取付', 'まだ決めていない'] },
       name: { label: 'お名前', type: 'name', required: true },
-      kana: { label: 'フリガナ', type: 'kana' },
-      email: { label: 'メールアドレス', type: 'email', required: true },
-      email_confirm: { label: 'メールアドレス（確認用）', type: 'email', required: true, confirm: 'email' },
-      zip: { label: '郵便番号', type: 'zip' },
-      address: { label: 'ご住所', type: 'address' },
+      kana: { label: 'フリガナ', type: 'kana', required: true },
       tel: { label: '電話番号', type: 'tel', required: true },
-      message: { label: 'メッセージ', type: 'textarea', required: true },
+      email: { label: 'メールアドレス', type: 'email' },
+      age: { label: '年齢', type: 'text' },
+      time: { label: '連絡してよい時間帯', type: 'text' },
+      career: { label: '今のお仕事・経験', type: 'textarea' },
+      question: { label: '聞きたいこと', type: 'textarea' },
     },
   },
 };
@@ -69,7 +71,7 @@ function validate(fields, v) {
   for (const [key, f] of Object.entries(fields)) {
     const val = v[key];
     const empty = typeof val === 'object' ? (f.type === 'name' ? !val.sei || !val.mei : !Object.values(val).join('')) : !val;
-    if (f.required && empty) { e[key] = `${f.label}を入力してください。`; continue; }
+    if (f.required && empty) { e[key] = `${f.label}を${f.type === 'radio' ? '選択' : '入力'}してください。`; continue; }
     if (empty) continue;
     if (f.type === 'email') {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) e[key] = 'メールアドレスの形式が正しくありません。';
@@ -148,7 +150,7 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: env.MAIL_FROM,
       to,
-      replyTo: `${encodeName(name)} <${values.email}>`,
+      replyTo: values.email ? `${encodeName(name)} <${values.email}>` : undefined,
       subject: form.subject,
       text: `${form.title}フォームから送信がありました。\n\n${text}--\n送信日時：${now}\n`,
     });
@@ -157,7 +159,8 @@ module.exports = async (req, res) => {
     return reply(500, { ok: false, message: failMsg }, `${back}#form`);
   }
 
-  try {
+  // 自動返信（メールアドレスの入力があった場合のみ）
+  if (values.email) try {
     await transporter.sendMail({
       from: `${encodeName(COMPANY.name)} <${env.MAIL_FROM}>`,
       to: values.email,

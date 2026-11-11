@@ -62,8 +62,25 @@ aoki_page_hero(
 	</div>
 </section>
 
+<?php if ( ! empty( $b['area'] ) ) : ?>
+<section class="section section--soft biz-area">
+	<div class="container container--narrow">
+		<?php aoki_heading( 'Area', '対応エリア', 'h2', 'heading--center' ); ?>
+		<p class="biz-area__list reveal"><?php echo aoki_icon( 'pin' ); // phpcs:ignore ?><?php echo esc_html( $b['area'] ); ?></p>
+		<?php if ( ! empty( $b['contact'] ) ) : ?>
+			<?php $c = aoki_company(); ?>
+			<div class="biz-area__contact reveal">
+				<p><?php echo esc_html( $b['contact'] ); ?></p>
+				<a class="biz-area__tel" href="<?php echo esc_attr( aoki_tel_link( $c['tel'] ) ); ?>"><?php echo aoki_icon( 'tel' ); // phpcs:ignore ?>TEL <?php echo esc_html( $c['tel'] ); ?></a>
+				<a class="btn btn--primary" href="<?php echo esc_url( aoki_url( 'contact' ) ); ?>"><?php echo aoki_icon( 'mail' ); // phpcs:ignore ?>お問い合わせフォーム</a>
+			</div>
+		<?php endif; ?>
+	</div>
+</section>
+<?php endif; ?>
+
 <?php if ( $works ) : ?>
-<section class="section section--soft">
+<section class="section">
 	<div class="container">
 		<div class="section__head">
 			<?php aoki_heading( 'Works', $b['title'] . 'の施工事例' ); ?>
