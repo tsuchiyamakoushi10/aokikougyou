@@ -22,7 +22,7 @@ aoki_page_hero(
 			<?php foreach ( $staff as $s ) : ?>
 				<li class="reveal">
 					<a href="#staff-<?php echo esc_attr( $s['id'] ); ?>">
-						<span class="staff-index__media"><?php echo aoki_img( $s['image'], '' ); // phpcs:ignore ?></span>
+						<span class="staff-index__media"><?php echo aoki_img( $s['image'], '', array( 'sizes' => '80px' ) ); // phpcs:ignore ?></span>
 						<span class="staff-index__name"><?php echo esc_html( $s['name'] ); ?></span>
 						<span class="staff-index__career"><?php echo esc_html( $s['career'] ); ?></span>
 					</a>
@@ -36,7 +36,7 @@ aoki_page_hero(
 	<article class="interview<?php echo $i % 2 ? ' interview--reverse section--soft' : ''; ?>" id="staff-<?php echo esc_attr( $s['id'] ); ?>">
 		<div class="container interview__grid">
 			<div class="interview__profile">
-				<figure class="interview__photo img-reveal"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真' ); // phpcs:ignore ?></figure>
+				<figure class="interview__photo img-reveal"><?php echo aoki_img( $s['image'], $s['name'] . 'の写真', array( 'sizes' => '(min-width: 900px) 420px, 100vw' ) ); // phpcs:ignore ?></figure>
 				<p class="interview__no" aria-hidden="true">Interview <span>0<?php echo (int) $i + 1; ?></span></p>
 			</div>
 			<div class="interview__body">

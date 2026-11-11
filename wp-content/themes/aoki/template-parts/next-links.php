@@ -12,7 +12,7 @@
 			<?php foreach ( $args['links'] as $l ) : ?>
 				<li class="reveal">
 					<a class="next-link" href="<?php echo esc_url( aoki_url( $l[2] ) ); ?>">
-						<span class="next-link__media"><?php echo aoki_img( $l[3] ); // phpcs:ignore ?></span>
+						<span class="next-link__media"><?php echo aoki_img( $l[3], '', array( 'sizes' => '(min-width: 768px) 33vw, 100vw' ) ); // phpcs:ignore ?></span>
 						<span class="next-link__body">
 							<span class="next-link__en" aria-hidden="true"><?php echo esc_html( $l[0] ); ?></span>
 							<span class="next-link__title"><?php echo esc_html( $l[1] ); ?></span>
