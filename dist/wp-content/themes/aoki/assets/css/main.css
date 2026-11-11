@@ -1497,6 +1497,7 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
 .radio input:checked + span { border-color: var(--blue); background: rgba(25, 118, 210, .06); color: var(--navy); font-weight: 700; }
 .radio input:checked + span::before { border: 5px solid var(--blue); }
 .radio input:focus-visible + span { outline: 3px solid var(--warm); outline-offset: 2px; }
+.form__turnstile { display: flex; justify-content: center; margin-top: 32px; }
 .form__submit { margin-top: 40px; text-align: center; }
 .form__submit .btn { min-width: min(100%, 360px); }
 .form__submit .btn[disabled] { opacity: .6; cursor: progress; }

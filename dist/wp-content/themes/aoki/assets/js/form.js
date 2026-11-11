@@ -153,6 +153,8 @@
 				return;
 			}
 			showAlert(res.message || '送信処理でエラーが発生しました。お手数ですが、お電話にてご連絡ください。', res.errors);
+			// ロボット判定（Turnstile）の確認は1回しか使えないので、送り直せるよう作り直す
+			if (window.turnstile) { try { window.turnstile.reset(); } catch (e) {} }
 			if (btn) { btn.disabled = false; btn.firstChild.textContent = label; }
 		}).catch(function () {
 			showAlert('通信エラーが発生しました。電波の良い場所で再度お試しいただくか、お電話にてご連絡ください。');

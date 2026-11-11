@@ -1,0 +1,50 @@
+{
+ "/": {
+  "date": "2026-11-11",
+  "hash": "136057e5680de5062417f82c83983b335646b27f50659747c2d6fea9233fb812"
+ },
+ "/business/": {
+  "date": "2026-11-11",
+  "hash": "14dce29d8a76abde2dfdda52e2492642eacbca505c0b0d3a1c34393fef457976"
+ },
+ "/business/automatic-door/": {
+  "date": "2026-11-11",
+  "hash": "fb800a951e38de94f159b7a7fe88764fb96d4744956c2f786bbf32b5c44b6f07"
+ },
+ "/business/fittings/": {
+  "date": "2026-11-11",
+  "hash": "009441629c00e1eea39f4a38ddb69ebbc4ce2d04b78689d1114efba91b5d82d8"
+ },
+ "/company/": {
+  "date": "2026-11-11",
+  "hash": "c14a6cf8acc8826269ca1a4b6549bf2c2ead10af7d13559f50e23dac73101d1f"
+ },
+ "/contact/": {
+  "date": "2026-11-11",
+  "hash": "d1a54e2042d1e3b0b1d0472f6f6f0191cd26d476103c0196acb837f7dd46ecf6"
+ },
+ "/entry/": {
+  "date": "2026-11-11",
+  "hash": "be61a026c8a968ca937ba1765f5d472bce3dcebbabe55618d07366356bfddc49"
+ },
+ "/recruit/": {
+  "date": "2026-11-11",
+  "hash": "199e27fc65710c18178e34639eb9ad331d6302c73153a11f3d82282563cdd2ac"
+ },
+ "/staff/": {
+  "date": "2026-11-11",
+  "hash": "6896c010b14d0a332387aea7f7340b4016ef7cafcf8e4c6459aa8de397e27742"
+ },
+ "/works/": {
+  "date": "2026-11-11",
+  "hash": "7ff06f2371d6817cb7aeeb609b395e06cda9025b3056c86a1fd36782731f891e"
+ },
+ "/works/category/automatic-door/": {
+  "date": "2026-11-11",
+  "hash": "350c0afbacfabf72ef1b188a13d3f418f262c7474c6684ed7d275f34e9873ad0"
+ },
+ "/works/category/fittings/": {
+  "date": "2026-11-11",
+  "hash": "783bf368755d8f4ef813df8e76119b88fb13ef7b3c260a19622be97c4d8b7971"
+ }
+}
