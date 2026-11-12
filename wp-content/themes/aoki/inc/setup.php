@@ -115,15 +115,33 @@ add_filter(
 	}
 );
 
+// body のクラスは、ページを見分ける1つだけにする（WordPress 標準のクラスは CSS で使っていない）。
 add_filter(
 	'body_class',
-	function ( $classes ) {
-		if ( is_page() ) {
-			$classes[] = 'page-' . get_post_field( 'post_name', get_queried_object_id() );
+	function () {
+		if ( is_front_page() ) {
+			return array( 'page-home' );
 		}
-		return $classes;
+		if ( is_page() ) {
+			return array( 'page-' . get_post_field( 'post_name', get_queried_object_id() ) );
+		}
+		if ( is_post_type_archive( 'works' ) || is_tax( 'works_cat' ) ) {
+			return array( 'page-works' );
+		}
+		if ( is_singular( 'works' ) ) {
+			return array( 'page-work' );
+		}
+		if ( is_404() ) {
+			return array( 'page-404' );
+		}
+		return array();
 	}
 );
+
+// WordPress が自動で出す、このサイトでは不要な出力を止める。
+add_filter( 'wp_speculation_rules_configuration', '__return_null' ); // 先読みルール（wp-admin などのパスが書かれる）
+add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );         // 画像の sizes="auto" と、そのための style
+remove_action( 'wp_head', 'wp_print_auto_sizes_contain_css_fix', 1 );
 
 /**
  * 本番以外（ローカル・ステージング）は検索エンジンに載せない。

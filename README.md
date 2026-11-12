@@ -108,6 +108,7 @@ Vercel では WordPress（PHP / データベース）が動かないため、ロ
 
 ```bash
 docker compose up -d
+npm install                    # 初回のみ（書き出し時の HTML 整形に Prettier を使う）
 python3 bin/export-static.py   # dist/ を更新（本番ドメインは SITE_URL で変更可）
 git add -A && git commit -m "サイト更新" && git push
 ```

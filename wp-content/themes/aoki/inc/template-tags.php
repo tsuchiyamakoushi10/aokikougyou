@@ -139,19 +139,28 @@ function aoki_icon( $name, $class = 'icon' ) {
  * ロゴ（マーク＋ロゴタイプ）。
  */
 function aoki_logo( $variant = 'default' ) {
-	static $mark = null, $word = null;
-	if ( null === $mark ) {
-		$mark = file_get_contents( AOKI_DIR . '/assets/img/logo/mark.svg' );
-		$word = str_replace( '#393536', 'currentColor', file_get_contents( AOKI_DIR . '/assets/img/logo/wordmark.svg' ) );
-	}
-	$mark_svg = str_replace( '<svg ', '<svg class="logo__mark" aria-hidden="true" focusable="false" ', $mark );
-	$word_svg = str_replace( '<svg ', '<svg class="logo__word" aria-hidden="true" focusable="false" ', $word );
-	return '<span class="logo logo--' . esc_attr( $variant ) . '">' . $mark_svg . $word_svg . '<span class="screen-reader-text">青木工業株式会社</span></span>';
+	return '<span class="logo logo--' . esc_attr( $variant ) . '">'
+		. aoki_logo_svg( 'aoki-mark', 'logo__mark' )
+		. aoki_logo_svg( 'aoki-word', 'logo__word' )
+		. '<span class="screen-reader-text">青木工業株式会社</span></span>';
 }
 
 function aoki_mark_svg( $class = '' ) {
-	$mark = file_get_contents( AOKI_DIR . '/assets/img/logo/mark.svg' );
-	return str_replace( '<svg ', '<svg class="' . esc_attr( $class ) . '" aria-hidden="true" focusable="false" ', $mark );
+	return aoki_logo_svg( 'aoki-mark', $class );
+}
+
+/**
+ * ロゴの図形は assets/img/logo/logo.svg（1ファイルにまとめたもの）を参照する。
+ * HTML に図形データを直接書かないので、ページが軽く、ソースも読みやすくなる。
+ * マークの濃い青は CSS の --logo-mark-main で色を変えられる（ヘッダーの白抜きなど）。
+ */
+function aoki_logo_svg( $id, $class = '' ) {
+	$viewbox = array(
+		'aoki-mark' => '0 0 220 164',
+		'aoki-word' => '0 0 346 79',
+	);
+	$href = AOKI_URI . '/assets/img/logo/logo.svg?v=' . aoki_asset_ver( 'assets/img/logo/logo.svg' ) . '#' . $id;
+	return '<svg class="' . esc_attr( $class ) . '" viewBox="' . $viewbox[ $id ] . '" aria-hidden="true" focusable="false"><use href="' . esc_url( $href ) . '"></use></svg>';
 }
 
 /**
