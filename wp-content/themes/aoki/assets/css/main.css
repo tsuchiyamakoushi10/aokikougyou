@@ -261,7 +261,7 @@ button { font: inherit; color: inherit; }
 .site-header--overlay:not(.is-scrolled) .gnav__link,
 .site-header--overlay:not(.is-scrolled) .header-tel,
 .site-header--overlay:not(.is-scrolled) .menu-toggle { color: #fff; }
-.site-header--overlay:not(.is-scrolled) .logo__mark path:nth-child(1) { fill: #fff; }
+.site-header--overlay:not(.is-scrolled) .logo__mark { --logo-mark-main: #fff; }
 .site-header--overlay:not(.is-scrolled) .header-tel__note { color: rgba(255, 255, 255, .8); }
 .site-header--overlay:not(.is-scrolled) .menu-toggle { border-color: rgba(255, 255, 255, .6); }
 .site-header--overlay.is-scrolled { background: rgba(255, 255, 255, .96); backdrop-filter: saturate(160%) blur(10px); -webkit-backdrop-filter: saturate(160%) blur(10px); }
@@ -499,7 +499,7 @@ html.is-drawer-open .site-header { background: var(--navy-deep); border-color: t
 html.is-drawer-open .site-header .logo,
 html.is-drawer-open .site-header .menu-toggle,
 html.is-drawer-open .site-header .header-tel { color: #fff; }
-html.is-drawer-open .site-header .logo__mark path:nth-child(1) { fill: #fff; }
+html.is-drawer-open .site-header .logo__mark { --logo-mark-main: #fff; }
 html.is-drawer-open .site-header .menu-toggle { border-color: rgba(255, 255, 255, .5); }
 html.is-drawer-open .header-contact,
 html.is-drawer-open .header-insta { display: none; }
@@ -1066,7 +1066,7 @@ html.js .img-reveal.is-in img { transform: none; }
 .site-footer a:hover { color: #fff; text-decoration: underline; }
 .site-footer__inner { display: grid; gap: 40px; padding-block: 64px 48px; }
 .site-footer__logo { display: inline-block; margin-bottom: 16px; }
-.site-footer__logo .logo__mark path:nth-child(1) { fill: #fff; }
+.site-footer__logo .logo__mark { --logo-mark-main: #fff; }
 .site-footer__philosophy { color: #fff; font-weight: 700; letter-spacing: .08em; margin-bottom: 20px; }
 .site-footer__address { margin-bottom: 14px; line-height: 1.8; }
 .site-footer__office { display: inline-block; margin-right: 8px; padding: 0 8px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 3px; font-size: 12px; }

@@ -38,6 +38,16 @@
       "permanent": true
     },
     {
+      "source": "/wp-content/themes/aoki/assets/:path*",
+      "destination": "/assets/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/:path*",
+      "destination": "/uploads/:path*",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
@@ -137,12 +147,12 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-3u2VtgrFXP0aiWDaFMJrKjLD2zoSCAcbOuGQsWVtAJg=' 'sha256-6otzu6SEm1G32wJX44CI31ML9LNkW6GP409Faw9f0go=' 'sha256-HQ6wGfFSsJbz0g+K6OpcXls9SAg7qzOdhYEFLAvzRd4=' 'sha256-n/MD4zkKZDtAgIIGv7JQluSy8MEh/MUlNR7R+ZCGyHQ=' 'sha256-s+F0JN3HcBBEfzxrXXKsVYzzONCZalveVVqPw3Tyq8o=' 'sha256-yEGyL1EaAPwWR5a/9CCCxw5rU3BM4vguiNRL2xnYuTo=' https://www.googletagmanager.com https://zipcloud.ibsnet.co.jp https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; frame-src https://www.google.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp"
+          "value": "default-src 'self'; script-src 'self' 'sha256-758fTQLER5pWpYcsApwD538IjxeeraQ6plBlMOSZDdA=' 'sha256-B8DaeJ6WpxehDM5bgWGtdYIufYdIIViX9KTV5qB/XH4=' 'sha256-ZnYJX5ypMaaAhxxWhSEjbMkhO2A9yPmbzEQH3LFaITA=' 'sha256-dxZAb09/faGSsUMzCs7J2ATyNMPGKuJM3yS2ga1Ad4U=' 'sha256-hi3q1b8AhwnBqzoSt42gKT9hc6WrEDK1rqFN1Dud8Ug=' 'sha256-r9+d+9AkBauNlVHWWlN77WyEyCWt345NqQfGTJl2xA4=' https://www.googletagmanager.com https://zipcloud.ibsnet.co.jp https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; frame-src https://www.google.com https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp"
         }
       ]
     },
     {
-      "source": "/wp-content/themes/aoki/assets/(css|js)/(.*)",
+      "source": "/assets/(css|js)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -151,7 +161,7 @@
       ]
     },
     {
-      "source": "/wp-content/themes/aoki/assets/img/(.*)",
+      "source": "/assets/img/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -160,7 +170,7 @@
       ]
     },
     {
-      "source": "/wp-content/uploads/(.*)",
+      "source": "/uploads/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

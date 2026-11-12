@@ -45,6 +45,12 @@ def clean(html):
     # フォームは Vercel の API（/api/form）へ送信
     html = re.sub(r'<form class="form" action="[^"]*"', '<form class="form" action="/api/form" data-endpoint="/api/form"', html)
     html = re.sub(r'<input type="hidden" id="_aoki_nonce"[^>]*>', '', html)
+    # WordPress 由来の書き方を、公開用のすっきりした形にそろえる
+    html = html.replace('/wp-content/themes/aoki/assets/', '/assets/').replace('/wp-content/uploads/', '/uploads/')
+    html = html.replace('?ver=', '?v=').replace('&#038;', '&amp;')
+    html = re.sub(r''' id=["'][a-z0-9-]+-(?:css|js)["']''', '', html)      # <link id='aoki-main-css'> など（使っていない）
+    html = re.sub(r''' data-wp-strategy=["'][a-z]+["']''', '', html)
+    html = re.sub(r'\n?<!--aoki:turnstile-->', '', html) if not TURNSTILE_SITE_KEY else html
     return html
 
 TURNSTILE_SITE_KEY = os.environ.get('TURNSTILE_SITE_KEY', '').strip()
@@ -77,6 +83,15 @@ for form in ('contact', 'entry'):
     open(out, 'w').write(html)
     print('page /%s/thanks/' % form)
 
+# HTML の字下げ・改行をそろえる（Prettier。npm install で入る）
+PRETTIER = os.path.join(ROOT, 'node_modules', '.bin', 'prettier')
+if not os.path.exists(PRETTIER):
+    raise SystemExit('ERROR: Prettier がありません。先に npm install を実行してください。')
+html_files = [os.path.join(d, f) for d, _, fs in os.walk(DIST) for f in fs if f.endswith('.html')]
+subprocess.check_call([PRETTIER, '--write', '--log-level', 'warn', '--parser', 'html', '--print-width', '200',
+                       '--html-whitespace-sensitivity', 'css'] + html_files)
+print('formatted %d html files' % len(html_files))
+
 # sitemap.xml / robots.txt
 # lastmod は「ページの中身が変わった日」。中身（ファイルの版番号を除く）のハッシュを bin/lastmod.json に記録し、
 # 変わったページだけ日付を更新する（Google は lastmod が正確なときだけ使う）。
@@ -100,8 +115,9 @@ open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nDisallow: /api
 shutil.copy(os.path.join(ROOT, 'wp-content/themes/aoki/assets/img/logo/mark.svg'), os.path.join(DIST, 'favicon.svg'))
 
 # テーマのアセットとアップロード画像
-shutil.copytree(os.path.join(ROOT, 'wp-content/themes/aoki/assets'), os.path.join(DIST, 'wp-content/themes/aoki/assets'))
-up = os.path.join(DIST, 'wp-content/uploads')
+# 公開時のパスは /assets/ と /uploads/（WordPress の /wp-content/... からは vercel.json で転送）
+shutil.copytree(os.path.join(ROOT, 'wp-content/themes/aoki/assets'), os.path.join(DIST, 'assets'))
+up = os.path.join(DIST, 'uploads')
 os.makedirs(up, exist_ok=True)
 cid = subprocess.check_output(['docker', 'compose', 'ps', '-q', 'wordpress'], cwd=ROOT, text=True).strip()
 subprocess.check_call(['docker', 'cp', cid + ':/var/www/html/wp-content/uploads/.', up])
@@ -111,7 +127,7 @@ missing = set()
 for d, _, files in os.walk(DIST):
     for f in files:
         if f.endswith('.html'):
-            for u in re.findall(r'(?:src|href|srcset)="(/wp-content/[^"\s#?]+)', open(os.path.join(d, f)).read()):
+            for u in re.findall(r'(?:src|href|srcset)="(/(?:assets|uploads)/[^"\s#?]+)', open(os.path.join(d, f)).read()):
                 if not os.path.exists(os.path.join(DIST, u.lstrip('/'))):
                     missing.add(u)
 print('missing assets:', sorted(missing) or 'none')
