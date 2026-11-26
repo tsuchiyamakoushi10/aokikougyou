@@ -1470,11 +1470,6 @@ html:not(.js) .js-hidden-heading { position: static !important; width: auto; hei
    Forms
    ========================================================================== */
 
-.contact-tel { display: flex; justify-content: center; margin-bottom: 40px; padding: 32px 24px; border-radius: var(--radius); background: var(--soft); text-align: center; }
-.contact-tel__title { margin-bottom: 4px; font-weight: 700; color: var(--ink); }
-.contact-tel__num { display: inline-flex; align-items: center; gap: 10px; color: var(--navy); font-family: var(--font-en); font-size: clamp(28px, 4vw, 36px); font-weight: 700; text-decoration: none; letter-spacing: .04em; }
-.contact-tel__num .icon { width: 32px; height: 32px; color: var(--blue); }
-.contact-tel__note { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
 .form-intro { margin-bottom: 32px; }
 
 .form { border-top: 1px solid var(--line); }
